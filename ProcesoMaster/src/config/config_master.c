@@ -14,10 +14,10 @@ Type_Config load_config(char* path){
 	return config;
 }
 
-void print_config(Type_Config auxConfig, t_log* log_Master){
-	log_info(log_Master, "----------------------");
-	log_info(log_Master, "Configuracion:");
-	log_info(log_Master, "PUERTO = %d",auxConfig.YAMA_PUERTO);
-	log_info(log_Master, "PUNTO_MONTAJE = %s",auxConfig.YAMA_IP);
-	log_info(log_Master, "----------------------");
+void print_config(Type_Config auxConfig, t_log* log_Console){
+	log_info(log_Console, "----------------------");
+	log_info(log_Console, "Configuracion:");
+	log_info(log_Console, "PUERTO = %d",auxConfig.YAMA_PUERTO);
+	log_info(log_Console, "PUNTO_MONTAJE = %s",auxConfig.YAMA_IP);
+	log_info(log_Console, "----------------------");
 }

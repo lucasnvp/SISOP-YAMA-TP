@@ -1,5 +1,5 @@
-#ifndef CONFIG_MASTER_H_
-#define CONFIG_MASTER_H_
+#ifndef CONFIG_YAMA_H_
+#define CONFIG_YAMA_H_
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,4 +19,4 @@ typedef struct ConfigType{
 Type_Config load_config(char* path);
 void print_config(Type_Config auxConfig, t_log* log_Console);
 
-#endif /* CONFIG_MASTER_H_ */
+#endif /* CONFIG_YAMA_H_ */
