@@ -6,6 +6,11 @@
 
 #include "commons/log.h"
 
+#include "config/config_filesystem.h"
+
+char* PATH_CONFIG = "/home/utnso/Blacklist/tp-2017-2c-Blacklist/ProcesoFileSystem/src/config/config.txt";
+Type_Config config;
+
 char* PATH_LOG = "/home/utnso/Blacklist/Logs/logFileSystem.txt";
 t_log* log_Console;
 t_log* log_FileSystem;
