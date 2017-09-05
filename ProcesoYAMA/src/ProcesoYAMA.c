@@ -12,6 +12,14 @@
 
 int main(void) {
 	puts("Proceso YAMA"); /* prints Proceso YAMA */
+
+	//Inicializar Log
+	init_log(PATH_LOG);
+
+	//Configuracion inicial
+	config = load_config(PATH_CONFIG);
+	print_config(config, log_Console);
+
 	return EXIT_SUCCESS;
 }
 
