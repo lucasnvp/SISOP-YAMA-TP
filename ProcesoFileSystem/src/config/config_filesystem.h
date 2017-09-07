@@ -11,6 +11,7 @@
 
 typedef struct ConfigType{
 	uint32_t PUERTO_FILESYSTEM;
+	uint32_t CANTCONEXIONES;
 } Type_Config;
 
 Type_Config load_config(char* path);
