@@ -64,7 +64,7 @@ void server(void* args){
 	uint32_t SERVIDOR_YAMA = build_server(config.YAMA_PUERTO, config.CANTCONEXIONES);
 
 	//El socket esta listo para escuchar
-	if(SERVIDOR_FILESYSTEM > 0){
+	if(SERVIDOR_YAMA > 0){
 		printf("Servidor YAMA Escuchando\n");
 	}
 

@@ -14,6 +14,7 @@ typedef struct ConfigType{
 	char* IP_FILESYSTEM;
 	char* NOMBRE_NODO;
 	uint32_t PUERTO_WORKER;
+	uint32_t CANTCONEXIONES;
 	char* RUTA_DATABIN;
 } Type_Config;
 

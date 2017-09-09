@@ -9,6 +9,7 @@ Type_Config load_config(char* path){
 	config.IP_FILESYSTEM = strdup(config_get_string_value(auxConfig, "IP_FILESYSTEM"));
 	config.NOMBRE_NODO = strdup(config_get_string_value(auxConfig, "NOMBRE_NODO"));
 	config.PUERTO_WORKER = config_get_int_value(auxConfig, "PUERTO_WORKER");
+	config.CANTCONEXIONES = config_get_int_value(auxConfig, "CANTCONEXIONES");
 	config.RUTA_DATABIN = strdup(config_get_string_value(auxConfig, "RUTA_DATABIN"));
 
 	config_destroy(auxConfig);
@@ -23,6 +24,7 @@ void print_config(Type_Config auxConfig, t_log* log_Console){
 	log_info(log_Console, "PUNTO_MONTAJE = %s",auxConfig.IP_FILESYSTEM);
 	log_info(log_Console, "NOMBRE_NODO = %s",auxConfig.NOMBRE_NODO);
 	log_info(log_Console, "PUERTO_WORKER = %d",auxConfig.PUERTO_WORKER);
+	log_info(log_Console, "CANTCONEXIONES = %d",auxConfig.CANTCONEXIONES);
 	log_info(log_Console, "RUTA_DATABIN = %s",auxConfig.RUTA_DATABIN);
 	log_info(log_Console, "----------------------");
 }
