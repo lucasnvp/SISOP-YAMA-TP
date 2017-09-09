@@ -104,11 +104,11 @@ void connection_handler(uint32_t socket, uint32_t command){
 	}
 	case NUEVA_CONEXION_YAMA:{
 		//Se conecto YAMA
-		printf("Se conecto YAMA");
+		log_info(log_Console,"Se conecto YAMA");
 		break;
 	}
 	default:
-		printf("Error al recibir el comando");
+		log_info(log_Console,"Error al recibir el comando");
 	}
 
 	return;
