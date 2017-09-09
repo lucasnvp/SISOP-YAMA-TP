@@ -20,9 +20,6 @@ int main(void) {
 	config = load_config(PATH_CONFIG);
 	print_config(config, log_Console);
 
-	// Variables hilos
-	pthread_t thread_server;
-
 	//Creo el hilo del servidor
 	pthread_create(&thread_server,NULL,(void*) server,"Servidor");
 

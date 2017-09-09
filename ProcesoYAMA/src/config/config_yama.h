@@ -10,10 +10,12 @@
 #include "commons/log.h"
 
 typedef struct ConfigType{
+	uint32_t YAMA_PUERTO;
 	uint32_t FS_PUERTO;
 	char* FS_IP;
 	uint32_t RETARDO_PLANIFICACION;
 	char* ALGORITMO_BALANCEO;
+	uint32_t CANTCONEXIONES;
 } Type_Config;
 
 Type_Config load_config(char* path);

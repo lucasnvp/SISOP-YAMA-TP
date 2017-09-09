@@ -17,9 +17,14 @@ char* PATH_LOG = "/home/utnso/Blacklist/Logs/logYAMA.txt";
 t_log* log_Console;
 t_log* log_YAMA;
 
+// Variables hilos
+pthread_t thread_server;
+
 uint32_t SERVIDOR_FILESYSTEM;
 
 void connect_server_FileSystem();
 void init_log(char* pathLog);
+void server(void* args);
+void connection_handler(uint32_t socket, uint32_t command);
 
 #endif /* YAMA_H_ */

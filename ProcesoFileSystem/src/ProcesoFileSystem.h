@@ -21,6 +21,9 @@ char* PATH_LOG = "/home/utnso/Blacklist/Logs/logFileSystem.txt";
 t_log* log_Console;
 t_log* log_FileSystem;
 
+// Variables hilos
+pthread_t thread_server;
+
 void init_log(char* pathLog);
 void server(void* args);
 void connection_handler(uint32_t socket, uint32_t command);
