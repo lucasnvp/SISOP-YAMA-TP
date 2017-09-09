@@ -98,7 +98,8 @@ void connection_handler(uint32_t socket, uint32_t command){
 	switch(command){
 	case NUEVA_CONEXION_NODO:{
 		//Se conecto un nodo
-		printf("Se conecto un nodo");
+		char* nodo = deserializar_string(socket);
+		log_info(log_Console,"Se conecto el %s", nodo);
 		break;
 	}
 	case NUEVA_CONEXION_YAMA:{
