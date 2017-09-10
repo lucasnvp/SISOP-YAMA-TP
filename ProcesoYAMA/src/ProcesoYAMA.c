@@ -110,8 +110,8 @@ void server(void* args){
 
 void connection_handler(uint32_t socket, uint32_t command){
 	switch(command){
-	case 1:{
-		log_info(log_Console,"Primer connection handler");
+	case NUEVA_CONEXION_MASTER:{
+		log_info(log_Console,"Se conecto un Master");
 		break;
 	}
 	default:
