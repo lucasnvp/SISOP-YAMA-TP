@@ -118,8 +118,10 @@ void server(void* args){
 
 void connection_handler(uint32_t socket, uint32_t command){
 	switch(command){
-	case NUEVA_CONEXION_MASTER:{
-		log_info(log_Console,"Se conecto un Master");
+	case NEW_JOB:{
+		log_info(log_Console,"NEW JOB");
+		DATOS_A_TRANSFORMAR = deserializar_string(socket);
+		log_info(log_Console, "Dato a transformar: %s", DATOS_A_TRANSFORMAR);
 		break;
 	}
 	default:

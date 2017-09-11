@@ -9,7 +9,7 @@
 #include "config/config_yama.h"
 
 #define NUEVA_CONEXION_YAMA 2
-#define NUEVA_CONEXION_MASTER 1
+#define NEW_JOB 1
 
 char* PATH_CONFIG = "/home/utnso/Blacklist/tp-2017-2c-Blacklist/ProcesoYAMA/src/config/config.txt";
 Type_Config config;
@@ -20,6 +20,8 @@ t_log* log_YAMA;
 
 // Variables hilos
 pthread_t thread_server;
+
+char* DATOS_A_TRANSFORMAR;
 
 uint32_t SERVIDOR_FILESYSTEM;
 

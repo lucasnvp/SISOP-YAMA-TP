@@ -33,6 +33,9 @@ int main(int argc, char *argv[]) {
 	RESULTADO_DE_LA_TRANSFORMACION = strdup(argv[4]);
 	log_info(log_Console,"Resultado: %s", argv[4]);
 
+	// Envio el dato a transformar a YAMA
+	serializar_string(SERVIDOR_YAMA, DATOS_A_TRANSFORMAR);
+
 	//Lo que tiene que hacer!
 	while(true){
 
