@@ -46,6 +46,14 @@ void connect_server_FileSystem(){
 		log_info(log_Console,"Connected successfully to the File System");
 		// Le informo al FS que nodo es
 		serializar_int(SERVIDOR_FILESYSTEM, NUEVA_CONEXION_YAMA);
+		// Retorno del estado del FS
+		uint32_t estado_FS = deserializar_int(SERVIDOR_FILESYSTEM);
+		if(estado_FS == true){
+			log_info(log_Console,"File System Stable");
+		} else{
+			log_warning(log_Console,"File System Unstable");
+			exit(EXIT_SUCCESS);
+		}
 	} else{
 		log_warning(log_Console, "No se puedo conectar al servidor de File System");
 	}

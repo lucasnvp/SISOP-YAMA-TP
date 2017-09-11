@@ -21,6 +21,11 @@ char* PATH_LOG = "/home/utnso/Blacklist/Logs/logFileSystem.txt";
 t_log* log_Console;
 t_log* log_FileSystem;
 
+bool ESTADO_ESTABLE;
+
+// Variables para el servidor
+fd_set master;   	// conjunto maestro de descriptores de fichero
+
 // Variables hilos
 pthread_t thread_server;
 

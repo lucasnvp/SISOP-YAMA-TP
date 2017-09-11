@@ -20,6 +20,9 @@ int main(void) {
 	config = load_config(PATH_CONFIG);
 	print_config(config, log_Console);
 
+	//El FS arranca como no estaba
+	ESTADO_ESTABLE = false;
+
 	//Creo el hilo del servidor
 	pthread_create(&thread_server,NULL,(void*) server,"Servidor");
 
@@ -35,8 +38,6 @@ void init_log(char* pathLog){
 }
 
 void server(void* args){
-	// Variables para el servidor
-	fd_set master;   	// conjunto maestro de descriptores de fichero
 	fd_set read_fds; 	// conjunto temporal de descriptores de fichero para select()
 	uint32_t fdmax;			// número máximo de descriptores de fichero
 	int i;				// variable para el for
@@ -101,7 +102,15 @@ void connection_handler(uint32_t socket, uint32_t command){
 	}
 	case NUEVA_CONEXION_YAMA:{
 		//Se conecto YAMA
-		log_info(log_Console,"Se conecto YAMA");
+		if(ESTADO_ESTABLE == true){
+			log_info(log_Console,"Se conecto YAMA");
+			serializar_int(socket, true);
+		} else{
+			serializar_int(socket, false);
+			close(socket);
+			FD_CLR(socket, &master);
+			log_warning(log_Console,"No se pudo conectar YAMA por estado inestable");
+		}
 		break;
 	}
 	default:
