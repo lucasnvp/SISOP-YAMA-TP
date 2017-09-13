@@ -22,6 +22,7 @@ t_log* log_Console;
 t_log* log_FileSystem;
 
 bool ESTADO_ESTABLE;
+bool CONNECT_DATANODE;
 
 // Variables para el servidor
 fd_set master;   	// conjunto maestro de descriptores de fichero

@@ -44,7 +44,7 @@ void connect_server_FileSystem(){
 	//Si conecto, informo
 	if(SERVIDOR_FILESYSTEM > 1){
 		log_info(log_Console,"Connected successfully to the File System");
-		// Le informo al FS que nodo es
+		// Le informo al FS que es una conexion YAMA
 		serializar_int(SERVIDOR_FILESYSTEM, NUEVA_CONEXION_YAMA);
 		// Retorno del estado del FS
 		uint32_t estado_FS = deserializar_int(SERVIDOR_FILESYSTEM);
@@ -56,6 +56,7 @@ void connect_server_FileSystem(){
 		}
 	} else{
 		log_warning(log_Console, "No se puedo conectar al servidor de File System");
+		exit(EXIT_SUCCESS);
 	}
 }
 
@@ -73,7 +74,7 @@ void server(void* args){
 
 	//El socket esta listo para escuchar
 	if(SERVIDOR_YAMA > 0){
-		printf("Servidor YAMA Escuchando\n");
+		log_info(log_Console,"Servidor YAMA Escuchando");
 	}
 
 	// añadir listener al conjunto maestro

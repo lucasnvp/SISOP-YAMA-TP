@@ -22,6 +22,7 @@ int main(void) {
 
 	//El FS arranca como no estaba
 	ESTADO_ESTABLE = false;
+	CONNECT_DATANODE = true;
 
 	//Creo el hilo del servidor
 	pthread_create(&thread_server,NULL,(void*) server,"Servidor");
@@ -49,7 +50,7 @@ void server(void* args){
 
 	//El socket esta listo para escuchar
 	if(SERVIDOR_FILESYSTEM > 0){
-		printf("Servidor FileSystem Escuchando\n");
+		log_info(log_Console,"Servidor FileSystem Escuchando");
 	}
 
 	// añadir listener al conjunto maestro
@@ -96,8 +97,16 @@ void connection_handler(uint32_t socket, uint32_t command){
 	switch(command){
 	case NUEVA_CONEXION_NODO:{
 		//Se conecto un nodo
-		char* nodo = deserializar_string(socket);
-		log_info(log_Console,"Se conecto el %s", nodo);
+		if(CONNECT_DATANODE == true){
+			serializar_int(socket, true);
+			char* nodo = deserializar_string(socket);
+			log_info(log_Console,"Se conecto el %s", nodo);
+		} else{
+			serializar_int(socket, false);
+			close(socket);
+			FD_CLR(socket, &master);
+			log_warning(log_Console,"No se pudo conectar el NODO. El FileSystem ya se encuentra formateado");
+		}
 		break;
 	}
 	case NUEVA_CONEXION_YAMA:{
