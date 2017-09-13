@@ -61,5 +61,6 @@ void connect_server_YAMA(){
 		serializar_int(SERVIDOR_YAMA, CONEXION_A_YAMA);
 	} else{
 		log_warning(log_Console, "No se puedo conectar al servidor de File System");
+		exit(EXIT_SUCCESS);
 	}
 }
