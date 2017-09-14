@@ -25,11 +25,30 @@ int main(void) {
 	CONNECT_DATANODE = true;
 
 	//Creo el hilo del servidor
-	pthread_create(&thread_server,NULL,(void*) server,"Servidor");
+	pthread_create(&thread_server, NULL, (void*) server, "Servidor");
 
 	pthread_join(thread_server, (void**) NULL);
 
+	//Creo el hilo de la consola
+	pthread_create(&thread_consola, NULL, (void*) consola, NULL);
+
+	pthread_join(thread_consola, (void**) NULL);
+
 	return EXIT_SUCCESS;
+}
+
+void consola() {
+	char * linea;
+	while (true) {
+		linea = readline("File_System> ");
+		if (linea)
+			add_history(linea);
+		if (!strncmp(linea, "exit", 4)) {
+			free(linea);
+			break;
+		}
+		free(linea);
+	}
 }
 
 void init_log(char* pathLog){
