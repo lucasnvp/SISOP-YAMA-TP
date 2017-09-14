@@ -9,6 +9,7 @@
 #include "config/config_master.h"
 
 #define CONEXION_A_YAMA 1
+#define NEW_JOB 		1
 
 char* PATH_CONFIG = "/home/utnso/Blacklist/tp-2017-2c-Blacklist/ProcesoMaster/src/config/config.txt";
 Type_Config config;

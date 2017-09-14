@@ -123,6 +123,7 @@ void connection_handler(uint32_t socket, uint32_t command){
 		log_info(log_Console,"NEW JOB");
 		DATOS_A_TRANSFORMAR = deserializar_string(socket);
 		log_info(log_Console, "Dato a transformar: %s", DATOS_A_TRANSFORMAR);
+		//Solicitar dato al FS
 		break;
 	}
 	default:

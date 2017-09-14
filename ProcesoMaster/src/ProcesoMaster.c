@@ -34,6 +34,7 @@ int main(int argc, char *argv[]) {
 	log_info(log_Console,"Resultado: %s", argv[4]);
 
 	// Envio el dato a transformar a YAMA
+	serializar_int(SERVIDOR_YAMA, NEW_JOB);
 	serializar_string(SERVIDOR_YAMA, DATOS_A_TRANSFORMAR);
 
 	//Lo que tiene que hacer!

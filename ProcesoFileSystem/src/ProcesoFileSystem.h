@@ -13,6 +13,7 @@
 
 #define NUEVA_CONEXION_NODO 1
 #define NUEVA_CONEXION_YAMA 2
+#define SOLICITAR_DATO 		3
 
 char* PATH_CONFIG = "/home/utnso/Blacklist/tp-2017-2c-Blacklist/ProcesoFileSystem/src/config/config.txt";
 Type_Config config;

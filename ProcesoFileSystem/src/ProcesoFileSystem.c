@@ -122,6 +122,12 @@ void connection_handler(uint32_t socket, uint32_t command){
 		}
 		break;
 	}
+	case SOLICITAR_DATO:{
+		// Recibir el datos solicitado
+		// Comprabar que existar
+		// Devolver la lista de los NODOS que contienen los datos
+		break;
+	}
 	default:
 		log_info(log_Console,"Error al recibir el comando");
 	}
