@@ -8,6 +8,8 @@
 #include "commons/log.h"
 #include "servidor/servidor.h"
 #include "serializador/serializador.h"
+#include "readline/readline.h"
+#include "readline/history.h"
 
 #include "config/config_filesystem.h"
 
@@ -29,7 +31,9 @@ fd_set master;   	// conjunto maestro de descriptores de fichero
 
 // Variables hilos
 pthread_t thread_server;
+pthread_t thread_consola;
 
+void consola();
 void init_log(char* pathLog);
 void server(void* args);
 void connection_handler(uint32_t socket, uint32_t command);
