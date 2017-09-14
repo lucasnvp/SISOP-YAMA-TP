@@ -11,7 +11,9 @@
 #include "ProcesoFileSystem.h"
 
 int main(void) {
-	puts("Proceso FileSystem"); /* prints Proceso FileSystem */
+	system("clear"); /* limpia la pantalla al empezar */
+
+	puts("Proceso FileSystem\n"); /* prints Proceso FileSystem */
 
 	//Inicializar Log
 	init_log(PATH_LOG);
@@ -27,37 +29,74 @@ int main(void) {
 	//Creo el hilo del servidor
 	pthread_create(&thread_server, NULL, (void*) server, "Servidor");
 
-	pthread_join(thread_server, (void**) NULL);
-
 	//Creo el hilo de la consola
 	pthread_create(&thread_consola, NULL, (void*) consola, NULL);
 
+	pthread_join(thread_server, (void**) NULL);
 	pthread_join(thread_consola, (void**) NULL);
 
 	return EXIT_SUCCESS;
 }
 
 void consola() {
+	char * com;
 	char * linea;
+	t_comandos * comandos;
+
 	while (true) {
-		linea = readline("File_System> ");
+		comandos = (t_comandos *) malloc (sizeof(t_comandos));
+		linea = readline("\nFile_System> ");
+
 		if (linea)
 			add_history(linea);
+
 		if (!strncmp(linea, "exit", 4)) {
+			free(comandos);
 			free(linea);
 			break;
 		}
+
+		com = strtok(linea, " ");
+		comandos->comando = (char *) malloc (sizeof(char) * strlen(com));
+		strcpy(comandos->comando, com);
+		comandos->cantArgs = 0;
+
+		com = strtok(NULL, " ");
+		uint32_t i = 0;
+		while (i < 4 && com) {
+			comandos->arg[i] = (char *) malloc (sizeof(char) * strlen(com));
+			strcpy(comandos->arg[i], com);
+			comandos->cantArgs++;
+			com = strtok(NULL, " ");
+			i++;
+		}
+
+		free(com);
+
+		if (!strcmp(comandos->comando, "format")) {
+			if (comandos->cantArgs == 0) {
+				// Acá lo que tendría que hacer con el format
+				// supongo que lo mejor sería crear una función que atienda cada comando
+			}
+		}
+
+		// Libero toda la memoria
+		for (i = 0; i < comandos->cantArgs; i++)
+			free(comandos->arg[i]);
+
+		free(comandos->comando);
+		free(comandos);
 		free(linea);
 	}
 }
 
-void init_log(char* pathLog){
-	mkdir("/home/utnso/Blacklist/Logs",0755);
+void init_log(char* pathLog) {
+	mkdir("/home/utnso/Blacklist/Logs", 0755);
 	log_Console = log_create(pathLog, "FileSystem", true, LOG_LEVEL_INFO);
 	log_FileSystem = log_create(pathLog, "FileSystem", false, LOG_LEVEL_INFO);
 }
 
-void server(void* args){
+void server(void* args) {
 	fd_set read_fds; 	// conjunto temporal de descriptores de fichero para select()
 	uint32_t fdmax;			// número máximo de descriptores de fichero
 	int i;				// variable para el for
@@ -68,8 +107,8 @@ void server(void* args){
 	uint32_t SERVIDOR_FILESYSTEM = build_server(config.PUERTO_FILESYSTEM, config.CANTCONEXIONES);
 
 	//El socket esta listo para escuchar
-	if(SERVIDOR_FILESYSTEM > 0){
-		log_info(log_Console,"Servidor FileSystem Escuchando");
+	if(SERVIDOR_FILESYSTEM > 0) {
+		log_info(log_FileSystem, "Servidor FileSystem Escuchando");
 	}
 
 	// añadir listener al conjunto maestro
@@ -100,10 +139,10 @@ void server(void* args){
 					uint32_t command = deserializar_int(i);
 
 					// gestionar datos de un cliente
-					if(command <= 0){
+					if(command <= 0) {
 						close(i); // Close conexion
 						FD_CLR(i, &master); // eliminar del conjunto maestro
-					}else {
+					} else {
 						connection_handler(i, command);
 					}
 				}
@@ -112,37 +151,37 @@ void server(void* args){
 	}
 }
 
-void connection_handler(uint32_t socket, uint32_t command){
-	switch(command){
-	case NUEVA_CONEXION_NODO:{
+void connection_handler(uint32_t socket, uint32_t command) {
+	switch(command) {
+	case NUEVA_CONEXION_NODO: {
 		//Se conecto un nodo
-		if(CONNECT_DATANODE == true){
+		if(CONNECT_DATANODE == true) {
 			serializar_int(socket, true);
 			char* nodo = deserializar_string(socket);
-			log_info(log_Console,"Se conecto el %s", nodo);
-		} else{
+			log_info(log_FileSystem, "Se conecto el %s", nodo);
+		} else {
 			serializar_int(socket, false);
 			close(socket);
 			FD_CLR(socket, &master);
-			log_warning(log_Console,"No se pudo conectar el NODO. El FileSystem ya se encuentra formateado");
+			log_warning(log_FileSystem, "No se pudo conectar el NODO. El FileSystem ya se encuentra formateado");
 		}
 		break;
 	}
-	case NUEVA_CONEXION_YAMA:{
+	case NUEVA_CONEXION_YAMA: {
 		//Se conecto YAMA
-		if(ESTADO_ESTABLE == true){
-			log_info(log_Console,"Se conecto YAMA");
+		if (ESTADO_ESTABLE == true) {
+			log_info(log_FileSystem, "Se conecto YAMA");
 			serializar_int(socket, true);
-		} else{
+		} else {
 			serializar_int(socket, false);
 			close(socket);
 			FD_CLR(socket, &master);
-			log_warning(log_Console,"No se pudo conectar YAMA por estado inestable");
+			log_warning(log_FileSystem, "No se pudo conectar YAMA por estado inestable");
 		}
 		break;
 	}
 	default:
-		log_info(log_Console,"Error al recibir el comando");
+		log_info(log_FileSystem, "Error al recibir el comando");
 	}
 
 	return;
