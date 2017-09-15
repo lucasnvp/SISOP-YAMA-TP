@@ -4,12 +4,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include <readline/history.h>
+#include <readline/readline.h>
 
 #include "commons/log.h"
 #include "servidor/servidor.h"
 #include "serializador/serializador.h"
-#include "readline/readline.h"
-#include "readline/history.h"
 
 #include "config/config_filesystem.h"
 
@@ -33,6 +33,12 @@ fd_set master;   	// conjunto maestro de descriptores de fichero
 // Variables hilos
 pthread_t thread_server;
 pthread_t thread_consola;
+
+typedef struct {
+	uint32_t cantArgs;
+	char * comando;
+	char * arg[4];
+} t_comandos;
 
 void consola();
 void init_log(char* pathLog);
