@@ -69,7 +69,7 @@ uint32_t accept_conexion(uint32_t servidor){
     if ((newfd = accept(servidor, (struct sockaddr *)&remoteaddr, &addrlen)) == -1) {
         perror("accept");
     } else {
-        printf("Server: new connection from %s on socket %d\n", inet_ntoa(remoteaddr.sin_addr), newfd);
+        //printf("Server: new connection from %s on socket %d\n", inet_ntoa(remoteaddr.sin_addr), newfd);
     }
 
     return newfd;
@@ -117,7 +117,7 @@ uint32_t recive_data(uint32_t cliente, void* buf, uint32_t bytesToRecive){
         // error o conexión cerrada por el cliente
         if (bytesRecibidos == 0) {
             // conexión cerrada
-            printf("Socket %d hung up\n", cliente);
+            //printf("Socket %d hung up\n", cliente);
             close(cliente);
         } else {
             perror("Error al recibir datos");

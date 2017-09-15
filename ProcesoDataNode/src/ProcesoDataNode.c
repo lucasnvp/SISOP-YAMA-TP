@@ -43,14 +43,13 @@ void connect_server_FileSystem(){
 
 	//Si conecto, informo
 	if(SERVIDOR_FILESYSTEM > 1){
-		log_info(log_Console,"Connected successfully to the File System");
 		// Le informo al FS que nodo es
 		serializar_int(SERVIDOR_FILESYSTEM, NUEVA_CONEXION_NODO);
 		// Retorno del estado del FS
 		uint32_t estado_FS = deserializar_int(SERVIDOR_FILESYSTEM);
 		if(estado_FS == true){
 			serializar_string(SERVIDOR_FILESYSTEM,config.NOMBRE_NODO);
-			log_info(log_Console,"File System Stable");
+			log_info(log_Console,"Connected successfully to the File System");
 		} else{
 			log_warning(log_Console,"File System ya formateado");
 			exit(EXIT_SUCCESS);

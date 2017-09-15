@@ -12,6 +12,7 @@
 #include "serializador/serializador.h"
 
 #include "config/config_filesystem.h"
+#include "comandos/comandos.h"
 
 #define NUEVA_CONEXION_NODO 1
 #define NUEVA_CONEXION_YAMA 2

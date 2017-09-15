@@ -32,7 +32,7 @@ int main(void) {
 	//Creo el hilo de la consola
 	pthread_create(&thread_consola, NULL, (void*) consola, NULL);
 
-	pthread_join(thread_server, (void**) NULL);
+	//pthread_join(thread_server, (void**) NULL);
 	pthread_join(thread_consola, (void**) NULL);
 
 	return EXIT_SUCCESS;
@@ -75,8 +75,10 @@ void consola() {
 
 		if (!strcmp(comandos->comando, "format")) {
 			if (comandos->cantArgs == 0) {
-				// Acá lo que tendría que hacer con el format
-				// supongo que lo mejor sería crear una función que atienda cada comando
+				if(format() == true){
+					ESTADO_ESTABLE = true;
+					CONNECT_DATANODE = false;
+				}
 			}
 		}
 
@@ -163,7 +165,7 @@ void connection_handler(uint32_t socket, uint32_t command) {
 			serializar_int(socket, false);
 			close(socket);
 			FD_CLR(socket, &master);
-			log_warning(log_FileSystem, "No se pudo conectar el NODO. El FileSystem ya se encuentra formateado");
+			log_warning(log_FileSystem, "Se rechazo la conexion de un NODO. El FileSystem ya se encuentra formateado");
 		}
 		break;
 	}
