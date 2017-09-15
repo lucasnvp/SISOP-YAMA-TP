@@ -28,7 +28,8 @@ int main(void) {
 
 	//Espera de solicitudes
 	while(true){
-
+		uint32_t command = deserializar_int(SERVIDOR_FILESYSTEM);
+		connection_handler(command);
 	}
 
 	return EXIT_SUCCESS;
@@ -61,4 +62,19 @@ void connect_server_FileSystem(){
 		log_warning(log_Console, "No se puedo conectar al servidor de File System");
 		exit(EXIT_SUCCESS);
 	}
+}
+
+void connection_handler(uint32_t command) {
+	switch(command) {
+	case GETBLOQUE: {
+		break;
+	}
+	case SETBLOQUE: {
+		break;
+	}
+	default:
+		log_info(log_Console, "Error al recibir el comando");
+	}
+
+	return;
 }
