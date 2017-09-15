@@ -20,6 +20,9 @@ int main(void) {
 	config = load_config(PATH_CONFIG);
 	print_config(config, log_Console);
 
+	//Setup
+	setup(config.RUTA_DATABIN);
+
 	//Conexion al servidor FileSystem
 	connect_server_FileSystem();
 

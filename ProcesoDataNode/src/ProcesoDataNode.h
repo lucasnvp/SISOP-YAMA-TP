@@ -7,6 +7,7 @@
 #include "commons/log.h"
 
 #include "config/config_nodo.h"
+#include "setup/setup.h"
 
 #define NUEVA_CONEXION_NODO 1
 
