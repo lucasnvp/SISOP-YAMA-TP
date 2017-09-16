@@ -10,7 +10,7 @@
 
 #include "ProcesoFileSystem.h"
 
-int main(void) {
+int main(int argc, char *argv[]) {
 	system("clear"); /* limpia la pantalla al empezar */
 
 	puts("Proceso FileSystem\n"); /* prints Proceso FileSystem */
@@ -25,6 +25,13 @@ int main(void) {
 	//El FS arranca como no estaba
 	ESTADO_ESTABLE = false;
 	CONNECT_DATANODE = true;
+
+	//Compruebo el flag de clean
+	if(argc > 1){
+		if(strcmp(argv[1],"--clean") == 0){
+			//Desarrollar el clean
+		}
+	}
 
 	//Creo el hilo del servidor
 	pthread_create(&thread_server, NULL, (void*) server, "Servidor");

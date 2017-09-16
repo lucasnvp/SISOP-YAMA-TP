@@ -35,7 +35,6 @@ void bloques_setup(){
 		char* nroBloque = string_new();
 		string_append(&nroBloque, montajeBloques);
 		string_append(&nroBloque, string_itoa(i));
-		string_append(&nroBloque, ".bin");
 		newBloque = fopen(nroBloque,"w+b");
 		fclose(newBloque);
 		free(nroBloque);

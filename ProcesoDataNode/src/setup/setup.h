@@ -12,8 +12,8 @@
 
 static const char* TAMANIO_BLOQUE = "TAMANIO_BLOQUES=1000000\n";
 static const char* CANTIDAD_BLOQUE = "CANTIDAD_BLOQUES=100\n";
-static const char* puntoDeMontaje = "/home/utnso/Blacklist/DataNode/";
-static const char* montajeBloques = "/home/utnso/Blacklist/DataNode/Bloques/";
+static const char* puntoDeMontaje = "/home/utnso/Blacklist/Node/";
+static const char* montajeBloques = "/home/utnso/Blacklist/Node/Bloques/";
 
 t_config * dataBinConfig;
 
