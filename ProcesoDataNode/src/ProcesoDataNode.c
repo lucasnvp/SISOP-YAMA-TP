@@ -21,7 +21,7 @@ int main(void) {
 	print_config(config, log_Console);
 
 	//Setup
-	setup(config.RUTA_DATABIN);
+	setup(config.RUTA_DATABIN, log_Console);
 
 	//Conexion al servidor FileSystem
 	connect_server_FileSystem();

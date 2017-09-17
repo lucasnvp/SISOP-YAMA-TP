@@ -7,26 +7,9 @@
 #include <inttypes.h>
 #include <sys/stat.h>
 
-#include "commons/config.h"
-#include "commons/string.h"
+#include "commons/log.h"
 
-static const char* TAMANIO_BLOQUE = "TAMANIO_BLOQUES=1000000\n";
-static const char* CANTIDAD_BLOQUE = "CANTIDAD_BLOQUES=100\n";
-static const char* puntoDeMontaje = "/home/utnso/Blacklist/Node/";
-static const char* montajeBloques = "/home/utnso/Blacklist/Node/Bloques/";
-
-t_config * dataBinConfig;
-
-FILE * databin;
-
-int i;
-uint32_t CANT_BLOQUES;
-uint32_t TAMANIO_BLOQUES;
-
-void setup(char* RUTA_DATABIN);
-void new_data_setup(char* RUTA_DATABIN);
-void data_setup(char* RUTA_DATABIN);
-void bloques_setup();
-void carpetas_setup();
+void setup(char* RUTA_DATABIN, t_log* log_Console);
+void data_setup(char* RUTA_DATABIN, t_log* log_Console);
 
 #endif /* SETUP_H_ */
