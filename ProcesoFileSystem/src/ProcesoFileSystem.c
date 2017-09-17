@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
 
 	//Compruebo el flag de clean
 	if(argc > 1){
-		if(strcmp(argv[1],"--clean") == 0){
+		if(!strcmp(argv[1], "--clean")){
 			//Desarrollar el clean
 		}
 	}
@@ -54,46 +54,53 @@ void consola() {
 		comandos = (t_comandos *) malloc (sizeof(t_comandos));
 		linea = readline("\nFile_System> ");
 
-		if (linea)
+		if (strlen(linea) > 0) {
+			log_info(log_FileSystem, "Linea: %s", linea);
 			add_history(linea);
 
-		if (!strncmp(linea, "exit", 4)) {
-			free(comandos);
-			free(linea);
-			break;
-		}
+			com = strtok(linea, " ");
+			comandos->comando = (char *) malloc (sizeof(char) * strlen(com));
+			strcpy(comandos->comando, com);
+			comandos->cantArgs = 0;
 
-		com = strtok(linea, " ");
-		comandos->comando = (char *) malloc (sizeof(char) * strlen(com));
-		strcpy(comandos->comando, com);
-		comandos->cantArgs = 0;
-
-		com = strtok(NULL, " ");
-		uint32_t i = 0;
-		while (i < 4 && com) {
-			comandos->arg[i] = (char *) malloc (sizeof(char) * strlen(com));
-			strcpy(comandos->arg[i], com);
-			comandos->cantArgs++;
 			com = strtok(NULL, " ");
-			i++;
-		}
-
-		free(com);
-
-		if (!strcmp(comandos->comando, "format")) {
-			if (comandos->cantArgs == 0) {
-				if(format() == true){
-					ESTADO_ESTABLE = true;
-					CONNECT_DATANODE = false;
-				}
+			uint32_t i = 0;
+			while (i < 4 && com) {
+				comandos->arg[i] = (char *) malloc (sizeof(char) * strlen(com));
+				strcpy(comandos->arg[i], com);
+				comandos->cantArgs++;
+				com = strtok(NULL, " ");
+				i++;
 			}
+			free(com);
+
+			if (!strcmp(comandos->comando, "exit")) {
+				if (comandos->cantArgs == 0) {
+					free(comandos->comando);
+					free(comandos);
+					free(linea);
+					break;
+				}
+				else print_console(log_error, "Número de parámetros incorrecto.");
+			}
+			else if (!strcmp(comandos->comando, "format")) {
+				if (comandos->cantArgs == 0) {
+					if (format()) {
+						ESTADO_ESTABLE = true;
+						CONNECT_DATANODE = false;
+						print_console(log_info, "File System formateado.");
+					}
+				}
+				else print_console(log_error, "Número de parámetros incorrecto.");
+			}
+			else print_console(log_error, "Comando incorrecto.");
+
+			// Libero toda la memoria
+			for (i = 0; i < comandos->cantArgs; i++)
+				free(comandos->arg[i]);
+
+			free(comandos->comando);
 		}
-
-		// Libero toda la memoria
-		for (i = 0; i < comandos->cantArgs; i++)
-			free(comandos->arg[i]);
-
-		free(comandos->comando);
 		free(comandos);
 		free(linea);
 	}
