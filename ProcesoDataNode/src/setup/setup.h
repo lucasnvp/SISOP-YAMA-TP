@@ -5,11 +5,20 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <inttypes.h>
+#include <fcntl.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <sys/mman.h>
 
 #include "commons/log.h"
 
-void setup(char* RUTA_DATABIN, t_log* log_Console);
-void data_setup(char* RUTA_DATABIN, t_log* log_Console);
+typedef struct BinType{
+	uint32_t fd;
+	uint32_t size;
+	char* binmap;
+} t_bin;
+
+t_bin* setup(char* RUTA_DATABIN, t_log* log_Console);
+t_bin* data_setup(char* RUTA_DATABIN, t_log* log_Console);
 
 #endif /* SETUP_H_ */

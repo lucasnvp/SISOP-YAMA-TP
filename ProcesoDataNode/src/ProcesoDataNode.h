@@ -20,6 +20,8 @@ char* PATH_LOG = "/home/utnso/Blacklist/Logs/logDataNode.txt";
 t_log* log_Console;
 t_log* log_DataNode;
 
+t_bin* bin;
+
 uint32_t SERVIDOR_FILESYSTEM;
 
 void connect_server_FileSystem();
