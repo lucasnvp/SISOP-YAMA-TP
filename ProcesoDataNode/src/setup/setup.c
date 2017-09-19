@@ -14,13 +14,15 @@ t_bin* data_setup(char* RUTA_DATABIN, t_log* log_Console){
 
 	struct stat binStat;
 
-	bin->fd = open(RUTA_DATABIN,O_RDWR);
+	bin->fd = open(RUTA_DATABIN,O_RDWR, (mode_t) 0600);
 
 	fstat(bin->fd,&binStat);
 
 	bin->size = binStat.st_size;
 
-	bin->binmap = mmap(0, bin->size, PROT_READ | PROT_WRITE, MAP_SHARED, bin->fd, 0);
+	bin->binmap = (char*) mmap(NULL, bin->size, PROT_READ | PROT_WRITE, MAP_SHARED, bin->fd, 0);
+
+	log_info(log_Console,"El tamanio del bin es: %d", bin->size);
 
 	log_info(log_Console,"Se mapeo el archivo BIN");
 

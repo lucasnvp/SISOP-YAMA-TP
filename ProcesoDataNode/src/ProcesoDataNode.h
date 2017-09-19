@@ -9,6 +9,7 @@
 #include "config/config_nodo.h"
 #include "setup/setup.h"
 
+#define TAMANIO_FIJO_BLOQUE 1048576
 #define NUEVA_CONEXION_NODO 1
 #define GETBLOQUE			1
 #define SETBLOQUE			2
@@ -27,5 +28,6 @@ uint32_t SERVIDOR_FILESYSTEM;
 void connect_server_FileSystem();
 void init_log(char* pathLog);
 void connection_handler(uint32_t command);
+void setBloque(uint32_t numero, char* datos);
 
 #endif /* DATANODE_H_ */

@@ -70,6 +70,8 @@ void connection_handler(uint32_t command) {
 		break;
 	}
 	case SETBLOQUE: {
+		//Deserializar los datos
+		//setBloque(uint32_t numero, char* datos);
 		break;
 	}
 	default:
@@ -77,4 +79,13 @@ void connection_handler(uint32_t command) {
 	}
 
 	return;
+}
+
+void setBloque(uint32_t numero, char* datos){
+	//Me ubico en que posicion tengo que escribir.
+	uint32_t posicionBloque = numero * TAMANIO_FIJO_BLOQUE;
+
+	//Poner un mutex por las dudas
+	memcpy(bin->binmap + posicionBloque , datos, strlen(datos));
+
 }
