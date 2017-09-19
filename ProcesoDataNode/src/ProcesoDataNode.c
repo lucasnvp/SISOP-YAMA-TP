@@ -67,6 +67,15 @@ void connect_server_FileSystem(){
 void connection_handler(uint32_t command) {
 	switch(command) {
 	case GETBLOQUE: {
+		//Deserializar el bloque a leer
+		uint32_t bloqueALeer = deserializar_int(SERVIDOR_FILESYSTEM);
+		//Leo el bloque
+		char* bloque = getBloque(bloqueALeer);
+		//Serializo el bloque
+		serializar_string(SERVIDOR_FILESYSTEM, bloque);
+		//Libero lo leido
+		free(bloque);
+
 		break;
 	}
 	case SETBLOQUE: {
@@ -87,10 +96,10 @@ void setBloque(uint32_t numero, char* datos){
 
 	//Poner un mutex por las dudas
 	memcpy(bin->binmap + posicionBloque , datos, strlen(datos));
-
 }
 
 char* getBloque(uint32_t numero){
+
 	uint32_t posicionBloque = numero * TAMANIO_FIJO_BLOQUE;
 
 	char* bufferBloque = malloc(TAMANIO_FIJO_BLOQUE);
