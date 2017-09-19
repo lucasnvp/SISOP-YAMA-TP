@@ -29,5 +29,6 @@ void connect_server_FileSystem();
 void init_log(char* pathLog);
 void connection_handler(uint32_t command);
 void setBloque(uint32_t numero, char* datos);
+char* getBloque(uint32_t numero);
 
 #endif /* DATANODE_H_ */

@@ -89,3 +89,13 @@ void setBloque(uint32_t numero, char* datos){
 	memcpy(bin->binmap + posicionBloque , datos, strlen(datos));
 
 }
+
+char* getBloque(uint32_t numero){
+	uint32_t posicionBloque = numero * TAMANIO_FIJO_BLOQUE;
+
+	char* bufferBloque = malloc(TAMANIO_FIJO_BLOQUE);
+
+	memcpy(bufferBloque, bin->binmap + posicionBloque, TAMANIO_FIJO_BLOQUE);
+
+	return bufferBloque;
+}
