@@ -173,8 +173,19 @@ void connection_handler(uint32_t socket, uint32_t command) {
 		//Se conecto un nodo
 		if(CONNECT_DATANODE == true) {
 			serializar_int(socket, true);
-			char* nodo = deserializar_string(socket);
-			log_info(log_FileSystem, "Se conecto el %s", nodo);
+			//Deserializar la info del nodo conectado
+			t_nodo* nodo = deserializar_nodo(socket);
+			//Agrego el FD al nodo
+			nodo->puertoDataNode = socket;
+			//Agrego la IP del nodo
+			struct sockaddr_in addr;
+			socklen_t addr_size = sizeof(struct sockaddr_in);
+			int res = getpeername(socket, (struct sockaddr *)&addr, &addr_size);
+			nodo->ip = strdup(inet_ntoa(addr.sin_addr));
+			//Informo
+			log_info(log_FileSystem, "Se conecto el %s", nodo->nombre);
+			log_info(log_FileSystem, "-IP: %s", nodo->ip);
+			log_info(log_FileSystem, "-Tamanio: %i", nodo->tamanio);
 		} else {
 			serializar_int(socket, false);
 			close(socket);

@@ -7,6 +7,7 @@
 #include <string.h>
 
 #include "/home/utnso/Blacklist/tp-2017-2c-Blacklist/Librerias/servidor/servidor.h"
+#include "estructuras.h"
 
 typedef struct {
 	char* data;
@@ -23,5 +24,8 @@ uint32_t deserializar_int(uint32_t socket);
 
 void serializar_string(int client, char* stringToSend);
 char* deserializar_string(int servidor);
+
+void serializar_nodo(uint32_t socket, t_nodo* nodo);
+t_nodo* deserializar_nodo(uint32_t socket);
 
 #endif /* SERIALIZADOR_H_ */

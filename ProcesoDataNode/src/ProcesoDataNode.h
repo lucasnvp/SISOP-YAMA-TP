@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 #include "commons/log.h"
+#include "serializador/estructuras.h"
 
 #include "config/config_nodo.h"
 #include "setup/setup.h"

@@ -52,7 +52,13 @@ void connect_server_FileSystem(){
 		// Retorno del estado del FS
 		uint32_t estado_FS = deserializar_int(SERVIDOR_FILESYSTEM);
 		if(estado_FS == true){
-			serializar_string(SERVIDOR_FILESYSTEM,config.NOMBRE_NODO);
+			//Armar la estructura de nodo
+			t_nodo* nodo = New_Nodo(config.NOMBRE_NODO, config.PUERTO_WORKER, bin->size);
+			//Serializar el nodo
+			serializar_nodo(SERVIDOR_FILESYSTEM, nodo);
+			//Free info enviadad
+			free(nodo);
+
 			log_info(log_Console,"Connected successfully to the File System");
 		} else{
 			log_warning(log_Console,"File System ya formateado");
