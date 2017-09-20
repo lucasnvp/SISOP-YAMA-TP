@@ -10,13 +10,14 @@
 
 #include "ProcesoDataNode.h"
 
-int main(void) {
+int main(int argc, char *argv[]) {
 	puts("Proceso DataNode"); /* prints Proceso DataNode */
 
 	//Inicializar Log
 	init_log(PATH_LOG);
 
 	//Configuracion inicial
+	PATH_CONFIG = strdup(argv[1]);
 	config = load_config(PATH_CONFIG);
 	print_config(config, log_Console);
 

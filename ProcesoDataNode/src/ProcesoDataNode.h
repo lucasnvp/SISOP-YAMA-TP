@@ -15,7 +15,8 @@
 #define GETBLOQUE			1
 #define SETBLOQUE			2
 
-char* PATH_CONFIG = "/home/utnso/Blacklist/tp-2017-2c-Blacklist/ProcesoDataNode/src/config/config.txt";
+//char* PATH_CONFIG = "/home/utnso/Blacklist/tp-2017-2c-Blacklist/ProcesoDataNode/src/config/config.txt";
+char* PATH_CONFIG;
 Type_Config config;
 
 char* PATH_LOG = "/home/utnso/Blacklist/Logs/logDataNode.txt";
