@@ -18,6 +18,9 @@ int main(int argc, char *argv[]) {
 	//Inicializar Log
 	init_log(PATH_LOG);
 
+	//Inicializar lista nodos
+	init_list_nodo();
+
 	//Configuracion inicial
 	config = load_config(PATH_CONFIG);
 	print_config(config, log_Console);
@@ -186,6 +189,8 @@ void connection_handler(uint32_t socket, uint32_t command) {
 			log_info(log_FileSystem, "Se conecto el %s", nodo->nombre);
 			log_info(log_FileSystem, "-IP: %s", nodo->ip);
 			log_info(log_FileSystem, "-Tamanio: %i", nodo->tamanio);
+			//Agrego a la lista de nodos
+			add_nodo(nodo);
 		} else {
 			serializar_int(socket, false);
 			close(socket);
