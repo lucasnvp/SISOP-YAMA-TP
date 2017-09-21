@@ -21,8 +21,6 @@
 #define NUEVA_CONEXION_YAMA 2
 #define SOLICITAR_DATO 		3
 
-static const char* clean = "--clean";
-
 char* PATH_CONFIG = "/home/utnso/Blacklist/tp-2017-2c-Blacklist/ProcesoFileSystem/src/config/config.txt";
 Type_Config config;
 

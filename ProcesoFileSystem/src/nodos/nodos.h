@@ -10,9 +10,11 @@
 #include "serializador/estructuras.h"
 
 t_list * LIST_NODOS;
+uint32_t tamanioTotal;
 
 void init_list_nodo();
 void add_nodo(t_nodo* nodo);
+uint32_t sizeFS();
 //Persistir nodos
 
 #endif /* NODOS_H_ */

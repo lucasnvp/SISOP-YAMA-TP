@@ -4,11 +4,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+
 #include "commons/log.h"
 
 t_log* log_FileSystem;
 
 void print_console(void (*log_function)(t_log*, const char*), char* message);
-bool format();
+void format(bool ESTADO_ESTABLE, bool CONNECT_DATANODE);
 
 #endif /* COMANDOS_H_ */

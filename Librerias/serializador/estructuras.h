@@ -18,5 +18,6 @@ typedef struct NodoType{
 }t_nodo;
 
 t_nodo* New_Nodo(char* nombre, uint32_t puertoWorker, uint32_t tamanio);
+void free_nodo(t_nodo* nodo);
 
 #endif /* ESTRUCTURAS_H_ */

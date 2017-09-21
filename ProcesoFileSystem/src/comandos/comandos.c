@@ -5,6 +5,9 @@ void print_console(void (*log_function)(t_log*, const char*), char* message) {
 	printf("%s", message);
 }
 
-bool format(){
-	return true;
+void format(bool ESTADO_ESTABLE, bool CONNECT_DATANODE){
+	sizeFS();
+	ESTADO_ESTABLE = true;
+	CONNECT_DATANODE = false;
+	print_console(log_info, "File System formateado.");
 }

@@ -89,11 +89,7 @@ void consola() {
 			}
 			else if (!strcmp(comandos->comando, "format")) {
 				if (comandos->cantArgs == 0) {
-					if (format()) {
-						ESTADO_ESTABLE = true;
-						CONNECT_DATANODE = false;
-						print_console(log_info, "File System formateado.");
-					}
+					format(ESTADO_ESTABLE, CONNECT_DATANODE);
 				}
 				else print_console(log_error, "Número de parámetros incorrecto.");
 			}

@@ -12,3 +12,9 @@ t_nodo* New_Nodo(char* nombre, uint32_t puertoWorker, uint32_t tamanio){
 	nodo->conectado = true;
 	return nodo;
 }
+
+void free_nodo(t_nodo* nodo){
+	free(nodo->nombre);
+	free(nodo->ip);
+	free(nodo);
+}
