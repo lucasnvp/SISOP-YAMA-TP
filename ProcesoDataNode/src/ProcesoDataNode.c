@@ -54,7 +54,7 @@ void connect_server_FileSystem(){
 		uint32_t estado_FS = deserializar_int(SERVIDOR_FILESYSTEM);
 		if(estado_FS == true){
 			//Armar la estructura de nodo
-			t_nodo* nodo = New_Nodo(config.NOMBRE_NODO, config.PUERTO_WORKER, bin->size);
+			t_nodo* nodo = New_Nodo(config.NOMBRE_NODO, config.PUERTO_WORKER, bytesToMB(bin->size));
 			//Serializar el nodo
 			serializar_nodo(SERVIDOR_FILESYSTEM, nodo);
 			//Free info enviadad

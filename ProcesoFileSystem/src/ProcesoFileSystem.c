@@ -188,7 +188,7 @@ void connection_handler(uint32_t socket, uint32_t command) {
 			//Informo
 			log_info(log_FileSystem, "Se conecto el %s", nodo->nombre);
 			log_info(log_FileSystem, "-IP: %s", nodo->ip);
-			log_info(log_FileSystem, "-Tamanio: %i", nodo->tamanio);
+			log_info(log_FileSystem, "-Tamanio: %i MB", nodo->tamanio);
 			//Agrego a la lista de nodos
 			add_nodo(nodo);
 		} else {
