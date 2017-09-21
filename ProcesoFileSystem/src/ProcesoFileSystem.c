@@ -33,6 +33,7 @@ int main(int argc, char *argv[]) {
 	if(argc > 1){
 		if(!strcmp(argv[1], "--clean")){
 			//Desarrollar el clean
+			//Borrar los archivos en metadata
 		}
 	}
 

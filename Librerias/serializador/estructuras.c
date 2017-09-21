@@ -8,6 +8,7 @@ t_nodo* New_Nodo(char* nombre, uint32_t puertoWorker, uint32_t tamanio){
 	nodo->puertoDataNode = 0;
 	nodo->puertoWorker = puertoWorker;
 	nodo->tamanio = tamanio;
+	nodo->tamanioLibre = 0;
 	nodo->conectado = true;
 	return nodo;
 }
