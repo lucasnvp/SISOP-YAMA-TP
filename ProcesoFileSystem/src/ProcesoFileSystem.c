@@ -55,22 +55,22 @@ void consola() {
 	t_comandos * comandos;
 
 	while (true) {
-		comandos = (t_comandos *) malloc (sizeof(t_comandos));
+		comandos = (t_comandos*) malloc (sizeof(t_comandos));
 		linea = readline("\nFile_System> ");
 
 		if (strlen(linea) > 0) {
-			log_info(log_FileSystem, "Linea: %s", linea);
+			log_info(log_FileSystem, "Linea de Consola: %s", linea);
 			add_history(linea);
 
 			com = strtok(linea, " ");
-			comandos->comando = (char *) malloc (sizeof(char) * strlen(com));
+			comandos->comando = (char*) malloc (sizeof(char) * strlen(com));
 			strcpy(comandos->comando, com);
 			comandos->cantArgs = 0;
 
 			com = strtok(NULL, " ");
 			uint32_t i = 0;
 			while (i < 4 && com) {
-				comandos->arg[i] = (char *) malloc (sizeof(char) * strlen(com));
+				comandos->arg[i] = (char*) malloc (sizeof(char) * strlen(com));
 				strcpy(comandos->arg[i], com);
 				comandos->cantArgs++;
 				com = strtok(NULL, " ");
@@ -86,15 +86,24 @@ void consola() {
 					//Funcion exit
 					exitToTheFS();
 				}
-				else print_console(log_error, "Número de parámetros incorrecto.");
+				else print_console((void*) log_error, "Número de parámetros incorrecto.");
 			}
+
 			else if (!strcmp(comandos->comando, "format")) {
 				if (comandos->cantArgs == 0) {
 					format(ESTADO_ESTABLE, CONNECT_DATANODE);
 				}
-				else print_console(log_error, "Número de parámetros incorrecto.");
+				else print_console((void*) log_error, "Número de parámetros incorrecto.");
 			}
-			else print_console(log_error, "Comando incorrecto.");
+
+			else if (!strcmp(comandos->comando, "cpfrom")) {
+				if (comandos->cantArgs == 2) {
+					copyFromFStoYamafs(comandos->arg[0], comandos->arg[1]);
+				}
+				else print_console((void*) log_error, "Número de parámetros incorrecto.");
+			}
+
+			else print_console((void*) log_error, "Comando incorrecto.");
 
 			// Libero toda la memoria
 			for (i = 0; i < comandos->cantArgs; i++)
