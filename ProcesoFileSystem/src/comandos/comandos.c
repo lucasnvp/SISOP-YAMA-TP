@@ -19,3 +19,7 @@ void exitToTheFS(){
 	//Cierro el proceso
 	exit(EXIT_SUCCESS);
 }
+
+void copyFromFStoYamafs(char* pathFS, char* dirYamafs){
+
+}
