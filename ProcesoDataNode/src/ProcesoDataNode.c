@@ -90,6 +90,11 @@ void connection_handler(uint32_t command) {
 		//setBloque(uint32_t numero, char* datos);
 		break;
 	}
+	case CLOSE_DATANODE:{
+		log_info(log_Console, "Se cerro la conexion con el FileSystem");
+		exit(EXIT_SUCCESS);
+		break;
+	}
 	default:
 		log_info(log_Console, "Error al recibir el comando");
 	}

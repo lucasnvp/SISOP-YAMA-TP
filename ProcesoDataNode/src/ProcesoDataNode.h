@@ -15,6 +15,7 @@
 #define NUEVA_CONEXION_NODO 1
 #define GETBLOQUE			1
 #define SETBLOQUE			2
+#define CLOSE_DATANODE		3
 
 //char* PATH_CONFIG = "/home/utnso/Blacklist/tp-2017-2c-Blacklist/ProcesoDataNode/src/config/config.txt";
 char* PATH_CONFIG;

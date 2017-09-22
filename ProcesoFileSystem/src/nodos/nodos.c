@@ -17,3 +17,12 @@ uint32_t sizeFS(){
 
 	list_iterate(LIST_NODOS, size_nodo);
 }
+
+void close_nodes_conexions(){
+	void close_nodo(void* element){
+		t_nodo* nodo = element;
+		serializar_int(nodo->puertoDataNode, CLOSE_DATANODE);
+	}
+
+	list_iterate(LIST_NODOS, close_nodo);
+}
