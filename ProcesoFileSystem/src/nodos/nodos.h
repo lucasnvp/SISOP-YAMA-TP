@@ -16,10 +16,13 @@ t_list * LIST_NODOS;
 uint32_t tamanioTotal;
 uint32_t tamanioLibreTotal;
 
+void setup_nodos();
 void init_list_nodo();
+void init_bitmap_por_nodo();
 void add_nodo(t_nodo* nodo);
 uint32_t sizeFS();
 void close_nodes_conexions();
 void persistir_nodos();
+void persistir_bitmaps();
 
 #endif /* NODOS_H_ */

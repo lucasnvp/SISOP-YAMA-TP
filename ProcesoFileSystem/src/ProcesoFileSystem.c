@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
 	init_log(PATH_LOG);
 
 	//Inicializar lista nodos
-	init_list_nodo();
+	setup_nodos();
 
 	//Configuracion inicial
 	config = load_config(PATH_CONFIG);

@@ -1,9 +1,24 @@
 #include "nodos.h"
 
+void setup_nodos(){
+	init_list_nodo();
+
+	if(ValidarArchivo("/home/utnso/Blacklist/metadata/nodos.bin")){
+		//Levantar la config de los nodos
+	} else{
+		// FS en blanco
+	}
+
+}
+
 void init_list_nodo(){
 	LIST_NODOS = list_create();
 	tamanioTotal = 0;
 	tamanioLibreTotal = 0;
+}
+
+void init_bitmap_por_nodo(){
+
 }
 
 void add_nodo(t_nodo* nodo){
@@ -53,4 +68,9 @@ void persistir_nodos(){
 
 	//Cierro el archivo
 	fclose(nodos);
+}
+
+void persistir_bitmaps(){
+	//Crea la carpeta de montaje
+	mkdir("/home/utnso/Blacklist/metadata/bitmaps", 0777);
 }
