@@ -98,6 +98,7 @@ void consola() {
 
 			else if (!strcmp(comandos->comando, "cpfrom")) {
 				if (comandos->cantArgs == 2) {
+					//Falta validar que el FS este formateado para usar este comando 24-09-17
 					copyFromFStoYamafs(comandos->arg[0], comandos->arg[1]);
 				}
 				else print_console((void*) log_error, "Número de parámetros incorrecto.");

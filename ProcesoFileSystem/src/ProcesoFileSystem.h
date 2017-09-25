@@ -17,6 +17,7 @@
 #include "config/config_filesystem.h"
 #include "comandos/comandos.h"
 
+#define TAMANIO_FIJO_BLOQUE 1048576
 #define NUEVA_CONEXION_NODO 1
 #define NUEVA_CONEXION_YAMA 2
 #define SOLICITAR_DATO 		3

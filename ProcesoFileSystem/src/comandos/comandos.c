@@ -21,5 +21,33 @@ void exitToTheFS(){
 }
 
 void copyFromFStoYamafs(char* pathFS, char* dirYamafs){
+	if(ValidarArchivo(pathFS)){
+		FILE * file;
+		uint32_t cantBloques = 0;
+		char* datosLeidos = malloc(TAMANIO_FIJO_BLOQUE);
 
+		// Size del archivo
+		file = fopen(pathFS, "r");
+		fseek(file, 0L, SEEK_END);
+		uint32_t sizeFile = ftell(file);
+		rewind(file);
+		printf("Tamanio del archivo a copiar: %i \n", sizeFile);
+
+		// Cantidad de bloques necesarios para el archivo
+		cantBloques = 1 + ( (sizeFile - 1) / 1000);
+		printf("\n Cant de Bloques: %i \n", cantBloques);
+
+		// Preguntar si tengo la cantidad de espacios necesarios en los nodos //
+
+		while(fgets(datosLeidos, 200, file)){
+			printf("%s", datosLeidos);
+			//Enviar los datos a los bloques //
+		}
+
+		free(datosLeidos);
+		fclose(file);
+
+	} else{
+		log_warning(log_FileSystem, "No se encontro el archivo");
+	}
 }

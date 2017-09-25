@@ -4,8 +4,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <inttypes.h>
 
 #include "commons/log.h"
+
+#define TAMANIO_FIJO_BLOQUE 1048576
 
 t_log* log_FileSystem;
 
