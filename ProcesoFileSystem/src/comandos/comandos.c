@@ -7,15 +7,16 @@ void print_console(void (*log_function)(t_log*, const char*), char* message) {
 
 void format(bool ESTADO_ESTABLE, bool CONNECT_DATANODE){
 	sizeFS();
+
+	//Persisto los nodos
+	persistir_nodos();
+
 	ESTADO_ESTABLE = true;
 	CONNECT_DATANODE = false;
 	print_console(log_info, "File System formateado.");
 }
 
 void exitToTheFS(){
-	//Persisto los nodos
-	persistir_nodos();
-
 	//Cierro la conexion con todos los nodos
 	close_nodes_conexions();
 
