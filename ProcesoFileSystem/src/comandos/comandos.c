@@ -13,6 +13,9 @@ void format(bool ESTADO_ESTABLE, bool CONNECT_DATANODE){
 }
 
 void exitToTheFS(){
+	//Persisto los nodos
+	persistir_nodos();
+
 	//Cierro la conexion con todos los nodos
 	close_nodes_conexions();
 

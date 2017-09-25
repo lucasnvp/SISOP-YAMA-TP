@@ -78,8 +78,8 @@ void serializar_nodo(uint32_t socket, t_nodo* nodo){
 	memcpy(ENVIAR + offset, &(nodo->tamanio),size_to_send);
 	offset += size_to_send;
 
-	size_to_send = sizeof(nodo->tamanioLibre);
-	memcpy(ENVIAR + offset, &(nodo->tamanioLibre),size_to_send);
+	size_to_send = sizeof(nodo->tamanioLibreNodo);
+	memcpy(ENVIAR + offset, &(nodo->tamanioLibreNodo),size_to_send);
 	offset += size_to_send;
 
 	size_to_send = sizeof(nodo->conectado);
@@ -122,8 +122,8 @@ t_nodo* deserializar_nodo(uint32_t socket){
 	memcpy(&nodo->tamanio, buffer + offset, size_to_recive);
 	offset += size_to_recive;
 
-	size_to_recive = sizeof(nodo->tamanioLibre);
-	memcpy(&nodo->tamanioLibre, buffer + offset, size_to_recive);
+	size_to_recive = sizeof(nodo->tamanioLibreNodo);
+	memcpy(&nodo->tamanioLibreNodo, buffer + offset, size_to_recive);
 	offset += size_to_recive;
 
 	size_to_recive = sizeof(nodo->conectado);

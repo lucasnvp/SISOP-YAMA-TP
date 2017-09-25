@@ -13,7 +13,7 @@ typedef struct NodoType{
 	uint32_t puertoWorker;
 	uint32_t puertoDataNode;
 	uint32_t tamanio;
-	uint32_t tamanioLibre;
+	uint32_t tamanioLibreNodo;
 	bool conectado;
 }t_nodo;
 
