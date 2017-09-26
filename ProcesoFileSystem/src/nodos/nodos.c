@@ -17,18 +17,48 @@ void init_list_nodo(){
 	tamanioLibreTotal = 0;
 }
 
-void init_bitmap_por_nodo(){
+void init_bitmap_por_nodo(char* pathNodoBitmap, uint32_t sizeNodo){
+	FILE* nodobitmap = fopen(pathNodoBitmap, "w+b");
+	char data[sizeNodo];
+	t_bitarray* bitarray_aux = bitarray_create_with_mode(data,sizeof(data),LSB_FIRST);
+	uint32_t i;
+	for(i=0; i <= sizeNodo; i++){
+		bitarray_clean_bit(bitarray_aux, i);
+	}
+	fwrite(bitarray_aux,1,sizeof(bitarray_aux),nodobitmap);
+	fclose(nodobitmap);
+}
 
+t_bitarray* reload_bitmap_por_nodo(char* pathNodoBitmap){
+	struct stat nodobitmapStat;
+	int32_t fd = open(pathNodoBitmap, O_RDWR);
+	fstat(fd,&nodobitmapStat);
+	char* mmapBitmap = mmap(0,nodobitmapStat.st_size,PROT_READ|PROT_WRITE, MAP_SHARED, fd,0);
+	t_bitarray* bitarray = bitarray_create_with_mode(mmapBitmap,nodobitmapStat.st_size, LSB_FIRST);
+	return bitarray;
 }
 
 void add_nodo(t_nodo* nodo){
-	list_add(LIST_NODOS, nodo);
+	t_nodo_and_bitmap* nodoAndBitmap = malloc(sizeof(t_nodo_and_bitmap));
+	nodoAndBitmap->nodo = nodo;
+
+	//Compruebo si ya tenia un bit map
+	char* pathNodoBitMap = string_new();
+	string_append_with_format(&pathNodoBitMap, "/home/utnso/Blacklist/metadata/%s.dat", nodo->nombre);
+	if(ValidarArchivo(pathNodoBitMap)){
+		nodoAndBitmap->bitarray = reload_bitmap_por_nodo(pathNodoBitMap);
+	} else{
+		init_bitmap_por_nodo(pathNodoBitMap, nodo->tamanio);
+		nodoAndBitmap->bitarray = reload_bitmap_por_nodo(pathNodoBitMap);
+	}
+
+	list_add(LIST_NODOS, nodoAndBitmap);
 }
 
 uint32_t sizeFS(){
 	void size_nodo(void* element){
-		t_nodo* nodo = element;
-		tamanioTotal += nodo->tamanio;
+		t_nodo_and_bitmap* nodo = element;
+		tamanioTotal += nodo->nodo->tamanio;
 //		tamanioLibreTotal += nodo->tamanioLibreNodo;
 	}
 
@@ -37,8 +67,10 @@ uint32_t sizeFS(){
 
 void close_nodes_conexions(){
 	void close_nodo(void* element){
-		t_nodo* nodo = element;
-		serializar_int(nodo->puertoDataNode, CLOSE_DATANODE);
+		t_nodo_and_bitmap* nodo = element;
+		serializar_int(nodo->nodo->puertoDataNode, CLOSE_DATANODE);
+		// Falta Persistir los bitmaps
+		// sincronizar todo lo de los mmaps
 	}
 
 	list_iterate(LIST_NODOS, close_nodo);
@@ -62,7 +94,7 @@ void persistir_nodos(){
 	char* tamanioFree = string_new();
 	string_append(&tamanioFree, "LIBRE=");
 	string_append(&tamanioFree, string_itoa(tamanioLibreTotal));
-	string_append(&tamanio, "\n");
+	string_append(&tamanioFree, "\n");
 	fwrite(tamanioFree,1,strlen(tamanioFree),nodos);
 	free(tamanioFree);
 
