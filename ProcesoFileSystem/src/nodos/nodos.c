@@ -7,6 +7,8 @@ void setup_nodos(){
 		//todo: Levantar la config de los nodos
 	} else{
 		//todo: FS en blanco
+		mkdir("/home/utnso/Blacklist/metadata", 0777);
+		mkdir("/home/utnso/Blacklist/metadata/bitmaps", 0777);
 	}
 
 }
@@ -15,6 +17,7 @@ void init_list_nodo(){
 	LIST_NODOS = list_create();
 	tamanioTotal = 0;
 	tamanioLibreTotal = 0;
+	punteroAlUltimoNodoEscrito = 0;
 }
 
 void init_bitmap_por_nodo(char* pathNodoBitmap, uint32_t sizeNodo){
@@ -84,17 +87,13 @@ void persistir_nodos(){
 
 	//Tamanio total del FS
 	char* tamanio = string_new();
-	string_append(&tamanio, "TAMANIO=");
-	string_append(&tamanio, string_itoa(tamanioTotal));
-	string_append(&tamanio, "\n");
+	string_append_with_format(&tamanio, "TAMANIO=%i\n", string_itoa(tamanioTotal));
 	fwrite(tamanio,1,strlen(tamanio),nodos);
 	free(tamanio);
 
 	//Tamanio free del FS
 	char* tamanioFree = string_new();
-	string_append(&tamanioFree, "LIBRE=");
-	string_append(&tamanioFree, string_itoa(tamanioLibreTotal));
-	string_append(&tamanioFree, "\n");
+	string_append_with_format(&tamanioFree, "LIBRE=%i\n", string_itoa(tamanioLibreTotal));
 	fwrite(tamanioFree,1,strlen(tamanioFree),nodos);
 	free(tamanioFree);
 
@@ -105,4 +104,26 @@ void persistir_nodos(){
 void persistir_bitmaps(){
 	//Crea la carpeta de montaje
 	mkdir("/home/utnso/Blacklist/metadata/bitmaps", 0777);
+}
+
+uint32_t reservar_bloques(uint32_t cantBloques){
+	uint32_t i;
+	t_nodo_and_bitmap* nodoC1;
+	t_nodo_and_bitmap* nodoC2;
+
+	for(i = 0; i < cantBloques; i++){
+		printf("Reservar bloque %i\n", i);
+		nodoC1 = list_get(LIST_NODOS, punteroAlUltimoNodoEscrito);
+		printf("Copia 1 = %s - Bloque: x \n", nodoC1->nodo->nombre);
+		nodo_next();
+		nodoC2 = list_get(LIST_NODOS, punteroAlUltimoNodoEscrito);
+		printf("Copia 2 = %s - Bloque: x \n", nodoC2->nodo->nombre);
+	}
+}
+
+uint32_t nodo_next(){
+	punteroAlUltimoNodoEscrito++;
+	if(list_size(LIST_NODOS) <= punteroAlUltimoNodoEscrito){
+		punteroAlUltimoNodoEscrito = 0;
+	}
 }

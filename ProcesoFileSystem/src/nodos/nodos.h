@@ -13,6 +13,8 @@
 #include "commons/collections/list.h"
 #include "serializador/estructuras.h"
 
+#include "../estructuras/structs.h"
+
 #define CLOSE_DATANODE	3
 
 typedef struct NodoBitMapType{
@@ -23,6 +25,7 @@ typedef struct NodoBitMapType{
 t_list * LIST_NODOS;
 uint32_t tamanioTotal;
 uint32_t tamanioLibreTotal;
+uint32_t punteroAlUltimoNodoEscrito;
 
 void setup_nodos();
 void init_list_nodo();
@@ -33,5 +36,7 @@ void sizeFS();
 void close_nodes_conexions();
 void persistir_nodos();
 void persistir_bitmaps();
+uint32_t reservar_bloques(uint32_t cantBloques);
+uint32_t nodo_next();
 
 #endif /* NODOS_H_ */
