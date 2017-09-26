@@ -23,6 +23,7 @@ typedef struct NodoBitMapType{
 }t_nodo_and_bitmap;
 
 t_list * LIST_NODOS;
+uint32_t i;
 uint32_t tamanioTotal;
 uint32_t tamanioLibreTotal;
 uint32_t punteroAlUltimoNodoEscrito;
@@ -37,6 +38,6 @@ void close_nodes_conexions();
 void persistir_nodos();
 void persistir_bitmaps();
 uint32_t reservar_bloques(uint32_t cantBloques);
-uint32_t nodo_next();
+bool nodo_next();
 
 #endif /* NODOS_H_ */

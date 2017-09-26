@@ -62,7 +62,7 @@ void sizeFS(){
 	void size_nodo(void* element){
 		t_nodo_and_bitmap* nodo = element;
 		tamanioTotal += nodo->nodo->tamanio;
-//		tamanioLibreTotal += nodo->tamanioLibreNodo;
+		tamanioLibreTotal += nodo->nodo->tamanioLibreNodo;
 	}
 
 	list_iterate(LIST_NODOS, size_nodo);
@@ -107,7 +107,6 @@ void persistir_bitmaps(){
 }
 
 uint32_t reservar_bloques(uint32_t cantBloques){
-	uint32_t i;
 	t_nodo_and_bitmap* nodoC1;
 	t_nodo_and_bitmap* nodoC2;
 
@@ -121,9 +120,23 @@ uint32_t reservar_bloques(uint32_t cantBloques){
 	}
 }
 
-uint32_t nodo_next(){
+bool nodo_next(){
+	bool espacioLibre = true;
+	uint32_t ultimoNodoEscrito = punteroAlUltimoNodoEscrito;
+	uint32_t sizeListaNodos = list_size(LIST_NODOS);
 	punteroAlUltimoNodoEscrito++;
-	if(list_size(LIST_NODOS) <= punteroAlUltimoNodoEscrito){
-		punteroAlUltimoNodoEscrito = 0;
+	if(sizeListaNodos <= punteroAlUltimoNodoEscrito) punteroAlUltimoNodoEscrito = 0;
+
+	while(espacioLibre){
+		t_nodo_and_bitmap* nodo = list_get(LIST_NODOS, punteroAlUltimoNodoEscrito);
+		if(nodo->nodo->tamanioLibreNodo == 0){
+			punteroAlUltimoNodoEscrito++;
+		} else {
+			espacioLibre = false;
+		}
+		if(sizeListaNodos <= punteroAlUltimoNodoEscrito) punteroAlUltimoNodoEscrito = 0;
+		if(punteroAlUltimoNodoEscrito == ultimoNodoEscrito) espacioLibre = false;
 	}
+
+	return espacioLibre;
 }
