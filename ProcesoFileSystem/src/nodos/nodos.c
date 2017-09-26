@@ -4,9 +4,9 @@ void setup_nodos(){
 	init_list_nodo();
 
 	if(ValidarArchivo("/home/utnso/Blacklist/metadata/nodos.bin")){
-		//Levantar la config de los nodos
+		//todo: Levantar la config de los nodos
 	} else{
-		// FS en blanco
+		//todo: FS en blanco
 	}
 
 }
@@ -55,7 +55,7 @@ void add_nodo(t_nodo* nodo){
 	list_add(LIST_NODOS, nodoAndBitmap);
 }
 
-uint32_t sizeFS(){
+void sizeFS(){
 	void size_nodo(void* element){
 		t_nodo_and_bitmap* nodo = element;
 		tamanioTotal += nodo->nodo->tamanio;
@@ -69,8 +69,8 @@ void close_nodes_conexions(){
 	void close_nodo(void* element){
 		t_nodo_and_bitmap* nodo = element;
 		serializar_int(nodo->nodo->puertoDataNode, CLOSE_DATANODE);
-		// Falta Persistir los bitmaps
-		// sincronizar todo lo de los mmaps
+		// todo: Falta Persistir los bitmaps
+		// todo: sincronizar lo de los mmaps
 	}
 
 	list_iterate(LIST_NODOS, close_nodo);

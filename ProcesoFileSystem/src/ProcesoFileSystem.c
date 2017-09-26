@@ -32,8 +32,7 @@ int main(int argc, char *argv[]) {
 	//Compruebo el flag de clean
 	if(argc > 1){
 		if(!strcmp(argv[1], "--clean")){
-			//Desarrollar el clean
-			//Borrar los archivos en metadata
+			remove_directory("/home/utnso/Blacklist/metadata");
 		}
 	}
 

@@ -29,7 +29,7 @@ void init_list_nodo();
 void init_bitmap_por_nodo(char* pathNodoBitmap, uint32_t sizeNodo);
 t_bitarray* reload_bitmap_por_nodo(char* pathNodoBitmap);
 void add_nodo(t_nodo* nodo);
-uint32_t sizeFS();
+void sizeFS();
 void close_nodes_conexions();
 void persistir_nodos();
 void persistir_bitmaps();
