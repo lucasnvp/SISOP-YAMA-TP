@@ -41,12 +41,7 @@ void copyFromFStoYamafs(char* pathFS, char* dirYamafs){
 
 		// Cantidad de bloques necesarios para el archivo
 		cantBloques = 1 + ( (sizeFile - 1) / TAMANIO_FIJO_BLOQUE);
-			//Prueba de reserva - Borrar
-			reservar_bloques(3);
-			//Fin prueba de reserva - borrar
-		printf("\n Cant de Bloques: %i \n", cantBloques);
-
-		// Preguntar si tengo la cantidad de espacios necesarios en los nodos //
+		t_list* listadoDeBloques = reservar_bloques(cantBloques);
 
 		while(fgets(datosLeidos, TAMANIO_FIJO_BLOQUE, file)){
 			printf("%s", datosLeidos);

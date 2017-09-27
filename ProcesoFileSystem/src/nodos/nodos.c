@@ -106,37 +106,67 @@ void persistir_bitmaps(){
 	mkdir("/home/utnso/Blacklist/metadata/bitmaps", 0777);
 }
 
-uint32_t reservar_bloques(uint32_t cantBloques){
+t_list* reservar_bloques(uint32_t cantBloques){
+	t_list* listaBloques = list_create();
 	t_nodo_and_bitmap* nodoC1;
 	t_nodo_and_bitmap* nodoC2;
 
+	//Compruebo si donde el puntero al utino nodo tiene espacio libre
+	nodoC1 = list_get(LIST_NODOS, punteroAlUltimoNodoEscrito);
+	if(nodoC1->nodo->tamanioLibreNodo == 0) nodo_next();
+
 	for(i = 0; i < cantBloques; i++){
-		printf("Reservar bloque %i\n", i);
+		t_bloque* bloque = malloc(sizeof(t_bloque));
+		bloque->nroBloque = i;
+
 		nodoC1 = list_get(LIST_NODOS, punteroAlUltimoNodoEscrito);
-		printf("Copia 1 = %s - Bloque: x \n", nodoC1->nodo->nombre);
-		nodo_next();
+		bloque->C1_Nodo = nodoC1->nodo->nombre;
+		bloque->C1_Bloque = get_set_bloque(nodoC1);
+
+		if (!nodo_next()){
+//			log_warning(log_Console, "No se pudo reservar bloques");
+			list_destroy(listaBloques);
+			return NULL;
+		}
+
 		nodoC2 = list_get(LIST_NODOS, punteroAlUltimoNodoEscrito);
-		printf("Copia 2 = %s - Bloque: x \n", nodoC2->nodo->nombre);
+		bloque->C2_Nodo = nodoC2->nodo->nombre;
+		bloque->C2_Bloque = get_set_bloque(nodoC2);
+
+		list_add(listaBloques, bloque);
 	}
+	return listaBloques;
 }
 
 bool nodo_next(){
-	bool espacioLibre = true;
+	bool espacioLibre = false;
 	uint32_t ultimoNodoEscrito = punteroAlUltimoNodoEscrito;
 	uint32_t sizeListaNodos = list_size(LIST_NODOS);
 	punteroAlUltimoNodoEscrito++;
 	if(sizeListaNodos <= punteroAlUltimoNodoEscrito) punteroAlUltimoNodoEscrito = 0;
 
-	while(espacioLibre){
+	while(!espacioLibre){
 		t_nodo_and_bitmap* nodo = list_get(LIST_NODOS, punteroAlUltimoNodoEscrito);
 		if(nodo->nodo->tamanioLibreNodo == 0){
 			punteroAlUltimoNodoEscrito++;
 		} else {
-			espacioLibre = false;
+			espacioLibre = true;
 		}
 		if(sizeListaNodos <= punteroAlUltimoNodoEscrito) punteroAlUltimoNodoEscrito = 0;
-		if(punteroAlUltimoNodoEscrito == ultimoNodoEscrito) espacioLibre = false;
+		if(punteroAlUltimoNodoEscrito == ultimoNodoEscrito) break;
 	}
 
 	return espacioLibre;
+}
+
+int32_t get_set_bloque(t_nodo_and_bitmap* nodo){
+	uint32_t nroDeBloque;
+	for(i = 0; i <= bitarray_get_max_bit(nodo->bitarray); i++){
+		if(bitarray_test_bit(nodo->bitarray, i) == false){
+			nroDeBloque = i;
+			bitarray_set_bit(nodo->bitarray, i);
+		}
+	}
+	nodo->nodo->tamanioLibreNodo--;
+	return nroDeBloque;
 }

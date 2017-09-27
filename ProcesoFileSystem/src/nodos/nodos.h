@@ -37,7 +37,8 @@ void sizeFS();
 void close_nodes_conexions();
 void persistir_nodos();
 void persistir_bitmaps();
-uint32_t reservar_bloques(uint32_t cantBloques);
+t_list* reservar_bloques(uint32_t cantBloques);
 bool nodo_next();
+int32_t get_set_bloque(t_nodo_and_bitmap* nodo);
 
 #endif /* NODOS_H_ */
