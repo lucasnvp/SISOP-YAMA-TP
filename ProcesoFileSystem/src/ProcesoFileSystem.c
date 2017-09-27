@@ -18,6 +18,9 @@ int main(int argc, char *argv[]) {
 	//Inicializar Log
 	init_log(PATH_LOG);
 
+	//Inicializar los directorios
+	setup_directorys();
+
 	//Inicializar lista nodos
 	setup_nodos();
 
@@ -97,8 +100,15 @@ void consola() {
 
 			else if (!strcmp(comandos->comando, "cpfrom")) {
 				if (comandos->cantArgs == 2) {
-					//Falta validar que el FS este formateado para usar este comando 24-09-17
+					//todo: Falta validar que el FS este formateado para usar este comando 24-09-17
 					copyFromFStoYamafs(comandos->arg[0], comandos->arg[1]);
+				}
+				else print_console((void*) log_error, "Número de parámetros incorrecto.");
+			}
+
+			else if (!strcmp(comandos->comando, "testls")) {
+				if (comandos->cantArgs == 0) {
+					listar_directorios(log_FileSystem);
 				}
 				else print_console((void*) log_error, "Número de parámetros incorrecto.");
 			}

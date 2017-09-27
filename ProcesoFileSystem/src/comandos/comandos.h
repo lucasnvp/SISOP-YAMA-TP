@@ -7,6 +7,7 @@
 #include <inttypes.h>
 
 #include "commons/log.h"
+#include "commons/collections/list.h"
 
 #define TAMANIO_FIJO_BLOQUE 1048576
 
