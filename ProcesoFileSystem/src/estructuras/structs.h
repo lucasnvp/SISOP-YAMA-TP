@@ -10,4 +10,12 @@ typedef struct ArchivoBloques{
 	uint32_t finBloque;
 }t_bloque;
 
+typedef struct Archivo{
+	uint32_t tamanio;
+	char* tipo;
+	uint32_t dir_padre;
+	bool estado;
+	t_list* bloques;
+}t_archivo;
+
 #endif /* STRUCTS_H_ */
