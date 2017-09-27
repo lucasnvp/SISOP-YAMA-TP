@@ -15,6 +15,13 @@ int main(int argc, char *argv[]) {
 
 	puts("Proceso FileSystem\n"); /* prints Proceso FileSystem */
 
+	//Compruebo el flag de clean
+	if(argc > 1){
+		if(!strcmp(argv[1], "--clean")){
+			remove_directory("/home/utnso/Blacklist/metadata");
+		}
+	}
+
 	//Inicializar Log
 	init_log(PATH_LOG);
 
@@ -31,13 +38,6 @@ int main(int argc, char *argv[]) {
 	//El FS arranca como no estaba
 	ESTADO_ESTABLE = false;
 	CONNECT_DATANODE = true;
-
-	//Compruebo el flag de clean
-	if(argc > 1){
-		if(!strcmp(argv[1], "--clean")){
-			remove_directory("/home/utnso/Blacklist/metadata");
-		}
-	}
 
 	//Creo el hilo del servidor
 	pthread_create(&thread_server, NULL, (void*) server, "Servidor");
@@ -109,6 +109,13 @@ void consola() {
 			else if (!strcmp(comandos->comando, "testls")) {
 				if (comandos->cantArgs == 0) {
 					listar_directorios(log_FileSystem);
+				}
+				else print_console((void*) log_error, "Número de parámetros incorrecto.");
+			}
+
+			else if (!strcmp(comandos->comando, "testmkdir")) {
+				if (comandos->cantArgs == 2) {
+					new_directory_yamafs(comandos->arg[0], atoi(comandos->arg[1]));
 				}
 				else print_console((void*) log_error, "Número de parámetros incorrecto.");
 			}

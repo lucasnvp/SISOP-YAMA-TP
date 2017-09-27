@@ -20,6 +20,9 @@ void exitToTheFS(){
 	//Cierro la conexion con todos los nodos
 	close_nodes_conexions();
 
+	//Persisto los directorios
+	persistir_directorios();
+
 	//Cierro el proceso
 	exit(EXIT_SUCCESS);
 }
