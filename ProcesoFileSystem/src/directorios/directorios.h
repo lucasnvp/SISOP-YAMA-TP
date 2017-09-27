@@ -17,7 +17,7 @@ void setup_directorys();
 void remove_directory_yamafs(uint32_t index);
 void listar_directorios(t_log* log_FileSystem);
 void persistir_directorios();
-void new_directory_yamafs(char* directorio, uint32_t padre);
+void new_directory_yamafs(char* directorio);
 void reload_directorys();
 
 #endif /* DIRECTORYS_H_ */

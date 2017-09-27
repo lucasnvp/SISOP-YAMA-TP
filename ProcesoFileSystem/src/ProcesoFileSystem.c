@@ -114,8 +114,8 @@ void consola() {
 			}
 
 			else if (!strcmp(comandos->comando, "testmkdir")) {
-				if (comandos->cantArgs == 2) {
-					new_directory_yamafs(comandos->arg[0], atoi(comandos->arg[1]));
+				if (comandos->cantArgs == 1) {
+					new_directory_yamafs(comandos->arg[0]);
 				}
 				else print_console((void*) log_error, "Número de parámetros incorrecto.");
 			}

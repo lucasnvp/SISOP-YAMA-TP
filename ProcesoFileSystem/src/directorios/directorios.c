@@ -50,11 +50,15 @@ void persistir_directorios(){
 	fclose(directory);
 }
 
-void new_directory_yamafs(char* directorio, uint32_t padre){
+void new_directory_yamafs(char* directorio){
 	uint32_t i;
+	uint32_t padre = 0;
+
+	char** nameDir = string_split(directorio, "/");
+
 	for(i = 1; i <= 99; i++){
 		if(string_equals_ignore_case(directorios[i].nombre, "")){
-			strcpy(directorios[i].nombre, directorio);
+			strcpy(directorios[i].nombre, nameDir[0]);
 			directorios[i].padre = padre;
 			break;
 		}
@@ -74,7 +78,6 @@ void reload_directorys(){
 		strcpy(directorios[i].nombre, dato[1]);
 		directorios[i].padre = atoi(dato[2]);
 		i++;
-		printf("%s", datosLeidos);
 	}
 
 	fclose(fileToRead);
