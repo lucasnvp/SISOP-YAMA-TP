@@ -13,7 +13,10 @@ struct Directorio directorios[99];
 static const char* PATH_METADATA = "/home/utnso/Blacklist/metadata/";
 static const char* PATH_DIRECTORIOS = "/home/utnso/Blacklist/metadata/directorios.dat";
 
-void setup_directorys();
+t_log* log_Console;
+t_log* log_FileSystem;
+
+void setup_directorys(t_log* console, t_log* fileSystem);
 void remove_directory_yamafs(uint32_t index);
 void listar_directorios(t_log* log_FileSystem);
 void persistir_directorios();

@@ -1,6 +1,9 @@
 #include "directorios.h"
 
-void setup_directorys(){
+void setup_directorys(t_log* console, t_log* fileSystem){
+	log_Console = console;
+	log_FileSystem = fileSystem;
+
 	if(ValidarArchivo(PATH_DIRECTORIOS)){
 		//todo: Levantar la config de los directorios
 		reload_directorys();
@@ -51,17 +54,54 @@ void persistir_directorios(){
 }
 
 void new_directory_yamafs(char* directorio){
-	uint32_t i;
+	uint32_t i = 0;
 	uint32_t padre = 0;
+	int32_t cantArgs = -1;
+	bool puedeGuargar = true;
 
 	char** nameDir = string_split(directorio, "/");
 
-	for(i = 1; i <= 99; i++){
-		if(string_equals_ignore_case(directorios[i].nombre, "")){
-			strcpy(directorios[i].nombre, nameDir[0]);
-			directorios[i].padre = padre;
+	// Cuantos argumentos son
+	while(nameDir[i] != NULL){
+		cantArgs++;
+		i++;
+	}
+//	log_info(log_FileSystem, "La cantidad de argumentos son: %i", cantArgs);
+
+	// Valido los argumentos
+	uint32_t j = 0;
+	while(j < cantArgs){
+		puedeGuargar = false;
+		for(i = 1; i <= 99; i++){
+			if(string_equals_ignore_case(directorios[i].nombre, nameDir[j])){
+				padre = directorios[i].index;
+				puedeGuargar = true;
+//				log_info(log_FileSystem,"Argumento Encontrado");
+			}
+		}
+		if(puedeGuargar == false){
+			log_info(log_FileSystem,"No se pudo crear el directorio");
 			break;
 		}
+		j++;
+	}
+
+	// Valido que ya no este creado
+	for(i = 1; i <= 99; i++){
+
+	}
+
+	// Guardo el ultimo argumento
+	if(puedeGuargar){
+		for(i = 1; i <= 99; i++){
+			if(string_equals_ignore_case(directorios[i].nombre, "")){
+				directorios[i].index = i;
+				strcpy(directorios[i].nombre, nameDir[cantArgs]);
+				directorios[i].padre = padre;
+				break;
+			}
+		}
+		log_info(log_FileSystem,"Directorio creado");
 	}
 }
 

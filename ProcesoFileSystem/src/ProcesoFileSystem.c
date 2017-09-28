@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
 	init_log(PATH_LOG);
 
 	//Inicializar los directorios
-	setup_directorys();
+	setup_directorys(log_Console, log_FileSystem);
 
 	//Inicializar lista nodos
 	setup_nodos();
