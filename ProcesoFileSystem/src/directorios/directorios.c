@@ -88,7 +88,11 @@ void new_directory_yamafs(char* directorio){
 
 	// Valido que ya no este creado
 	for(i = 1; i <= 99; i++){
-
+		if(string_equals_ignore_case(directorios[i].nombre, nameDir[cantArgs]))
+			if(directorios[i].padre == padre){
+				log_info(log_FileSystem,"El directorio ya esta creado");
+				puedeGuargar = false;
+			}
 	}
 
 	// Guardo el ultimo argumento

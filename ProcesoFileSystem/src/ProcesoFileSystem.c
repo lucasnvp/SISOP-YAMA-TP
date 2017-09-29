@@ -106,19 +106,25 @@ void consola() {
 				else print_console((void*) log_error, "Número de parámetros incorrecto.");
 			}
 
+			else if (!strcmp(comandos->comando, "mkdir")) {
+				if (comandos->cantArgs == 1) {
+					new_directory_yamafs(comandos->arg[0]);
+				}
+				else print_console((void*) log_error, "Número de parámetros incorrecto.");
+			}
+
+			/*										*/
+			/* 		Comienzo de test de comandos	*/
+			/* 										*/
 			else if (!strcmp(comandos->comando, "testls")) {
 				if (comandos->cantArgs == 0) {
 					listar_directorios(log_FileSystem);
 				}
 				else print_console((void*) log_error, "Número de parámetros incorrecto.");
 			}
-
-			else if (!strcmp(comandos->comando, "testmkdir")) {
-				if (comandos->cantArgs == 1) {
-					new_directory_yamafs(comandos->arg[0]);
-				}
-				else print_console((void*) log_error, "Número de parámetros incorrecto.");
-			}
+			/*										*/
+			/* 		Fin de test de comandos	*/
+			/* 										*/
 
 			else print_console((void*) log_error, "Comando incorrecto.");
 
