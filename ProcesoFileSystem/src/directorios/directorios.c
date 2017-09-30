@@ -15,6 +15,7 @@ void setup_directorys(t_log* console, t_log* fileSystem){
 }
 
 void remove_directory_yamafs(uint32_t index){
+	// todo: Falta desarrollar
 	strcpy(directorios[index].nombre, "");
 	directorios[index].padre = 0;
 }
@@ -129,7 +130,7 @@ void reload_directorys(){
 	fclose(fileToRead);
 }
 
-void rename_directoty_yamafs(char* pathOriginal, char* nombreFinal){
+void rename_directory_yamafs(char* pathOriginal, char* nombreFinal){
 	uint32_t i = 0;
 	uint32_t j = 0;
 	uint32_t padre = 0;
@@ -160,4 +161,8 @@ void rename_directoty_yamafs(char* pathOriginal, char* nombreFinal){
 				log_info(log_FileSystem,"El directorio fue renombrado");
 			}
 	}
+}
+
+void move_directory_yamafs(char* pathOriginal, char* pathFinal){
+
 }

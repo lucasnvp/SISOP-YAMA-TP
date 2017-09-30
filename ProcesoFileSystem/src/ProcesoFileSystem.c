@@ -125,7 +125,7 @@ void consola() {
 
 			else if (!strcmp(comandos->comando, "testrenamedir")) {
 				if (comandos->cantArgs == 2) {
-					rename_directoty_yamafs(comandos->arg[0], comandos->arg[1]);
+					rename_directory_yamafs(comandos->arg[0], comandos->arg[1]);
 				}
 				else print_console((void*) log_error, "Número de parámetros incorrecto.");
 			}
@@ -133,6 +133,13 @@ void consola() {
 			else if (!strcmp(comandos->comando, "testrmdir")) {
 				if (comandos->cantArgs == 1) {
 					remove_directory_yamafs(atoi(comandos->arg[0]));
+				}
+				else print_console((void*) log_error, "Número de parámetros incorrecto.");
+			}
+
+			else if (!strcmp(comandos->comando, "testmv")) {
+				if (comandos->cantArgs == 2) {
+					move_directory_yamafs(comandos->arg[0], comandos->arg[1]);
 				}
 				else print_console((void*) log_error, "Número de parámetros incorrecto.");
 			}

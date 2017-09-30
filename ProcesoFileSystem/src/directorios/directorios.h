@@ -17,11 +17,13 @@ t_log* log_Console;
 t_log* log_FileSystem;
 
 void setup_directorys(t_log* console, t_log* fileSystem);
-void remove_directory_yamafs(uint32_t index);
-void listar_directorios(t_log* log_FileSystem);
-void persistir_directorios();
-void new_directory_yamafs(char* directorio);
 void reload_directorys();
-void rename_directoty_yamafs(char* pathOriginal, char* nombreFinal);
+void persistir_directorios();
+
+void remove_directory_yamafs(uint32_t index);
+void rename_directory_yamafs(char* pathOriginal, char* nombreFinal);
+void move_directory_yamafs(char* pathOriginal, char* pathFinal);
+void new_directory_yamafs(char* directorio);
+void listar_directorios(t_log* log_FileSystem);
 
 #endif /* DIRECTORYS_H_ */
