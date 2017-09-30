@@ -24,7 +24,7 @@ void listar_directorios(t_log* log_FileSystem){
 	log_info(log_FileSystem, "Index\tDirectorio\tPadre");
 	for(i = 0; i <= 99; i++){
 		if(!string_equals_ignore_case(directorios[i].nombre, "")){
-			log_info(log_FileSystem, "%i\t%s\t%i", i, directorios[i].nombre, directorios[i].padre);
+			log_info(log_FileSystem, "%i\t%s\t%i", directorios[i].index, directorios[i].nombre, directorios[i].padre);
 		}
 	}
 }
@@ -43,7 +43,7 @@ void persistir_directorios(){
 	for(i = 0; i <= 99; i++){
 		if(!string_equals_ignore_case(directorios[i].nombre, "")){
 			char* registros = string_new();
-			string_append_with_format(&registros, "%s\t%s\t%s\n", string_itoa(i), directorios[i].nombre , string_itoa(directorios[i].padre));
+			string_append_with_format(&registros, "%s\t%s\t%s\n", string_itoa(directorios[i].index), directorios[i].nombre , string_itoa(directorios[i].padre));
 			fwrite(registros,1,strlen(registros),directory);
 			free(registros);
 		}
@@ -118,9 +118,11 @@ void reload_directorys(){
 
 	while(fgets(datosLeidos,25,fileToRead)){
 		char** dato = string_split(datosLeidos, "\t");
-		directorios[i].index = 0;
-		strcpy(directorios[i].nombre, dato[1]);
-		directorios[i].padre = atoi(dato[2]);
+		if(atoi(dato[0]) == i){
+			directorios[i].index = i;
+			strcpy(directorios[i].nombre, dato[1]);
+			directorios[i].padre = atoi(dato[2]);
+		}
 		i++;
 	}
 

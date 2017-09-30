@@ -22,7 +22,6 @@ void listar_directorios(t_log* log_FileSystem);
 void persistir_directorios();
 void new_directory_yamafs(char* directorio);
 void reload_directorys();
-
 void rename_directoty_yamafs(char* pathOriginal, char* nombreFinal);
 
 #endif /* DIRECTORYS_H_ */
