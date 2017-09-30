@@ -122,6 +122,13 @@ void consola() {
 				}
 				else print_console((void*) log_error, "Número de parámetros incorrecto.");
 			}
+
+			else if (!strcmp(comandos->comando, "testrename")) {
+				if (comandos->cantArgs == 2) {
+					rename_directoty_yamafs(comandos->arg[0], comandos->arg[1]);
+				}
+				else print_console((void*) log_error, "Número de parámetros incorrecto.");
+			}
 			/*										*/
 			/* 		Fin de test de comandos	*/
 			/* 										*/

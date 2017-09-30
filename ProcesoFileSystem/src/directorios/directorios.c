@@ -126,3 +126,36 @@ void reload_directorys(){
 
 	fclose(fileToRead);
 }
+
+void rename_directoty_yamafs(char* pathOriginal, char* nombreFinal){
+	uint32_t i = 0;
+	uint32_t j = 0;
+	uint32_t padre = 0;
+	int32_t cantArgs = -1;
+	char** nameDir = string_split(pathOriginal, "/");
+
+	// Cuantos argumentos son
+	while(nameDir[i] != NULL){
+		cantArgs++;
+		i++;
+	}
+
+	// Busco el padre del dir
+	while(j < cantArgs){
+		for(i = 1; i <= 99; i++){
+			if(string_equals_ignore_case(directorios[i].nombre, nameDir[j])){
+				padre = directorios[i].index;
+			}
+		}
+		j++;
+	}
+
+	// Busco el directorio a renombrar
+	for(i = 1; i <= 99; i++){
+		if(string_equals_ignore_case(directorios[i].nombre, nameDir[cantArgs]))
+			if(directorios[i].padre == padre){
+				strcpy(directorios[i].nombre, nombreFinal);
+				log_info(log_FileSystem,"El directorio fue renombrado");
+			}
+	}
+}
