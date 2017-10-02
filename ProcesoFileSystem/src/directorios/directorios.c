@@ -5,7 +5,6 @@ void setup_directorys(t_log* console, t_log* fileSystem){
 	log_FileSystem = fileSystem;
 
 	if(ValidarArchivo(PATH_DIRECTORIOS)){
-		//todo: Levantar la config de los directorios
 		reload_directorys();
 	} else{
 		mkdir(PATH_METADATA, 0777);
@@ -15,9 +14,21 @@ void setup_directorys(t_log* console, t_log* fileSystem){
 }
 
 void remove_directory_yamafs(uint32_t index){
-	// todo: Falta desarrollar
-	strcpy(directorios[index].nombre, "");
-	directorios[index].padre = 0;
+	uint32_t i;
+	bool puedeEliminar = true;
+
+	for(i = 0; i <= 99; i++){
+		if(directorios[i].padre == index){
+			puedeEliminar = false;
+			log_info(log_FileSystem,"No se puede eliminar el directorio, no se encuentra vacio");
+			break;
+		}
+	}
+
+	if(puedeEliminar){
+		strcpy(directorios[index].nombre, "");
+		directorios[index].padre = 0;
+	}
 }
 
 void listar_directorios(t_log* log_FileSystem){
