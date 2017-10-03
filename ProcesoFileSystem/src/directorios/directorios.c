@@ -111,21 +111,18 @@ void new_directory_yamafs(char* directorio){
 
 void reload_directorys(){
 	FILE * fileToRead = fopen(PATH_DIRECTORIOS,"r");
-	uint32_t i = 0;
 
 	char* datosLeidos = malloc(25);
 	fgets(datosLeidos,25,fileToRead);
 
 	while(fgets(datosLeidos,25,fileToRead)){
 		char** dato = string_split(datosLeidos, "\t");
-		if(atoi(dato[0]) == i){
-			directorios[i].index = i;
-			strcpy(directorios[i].nombre, dato[1]);
-			directorios[i].padre = atoi(dato[2]);
-		}
-		i++;
+		directorios[atoi(dato[0])].index = atoi(dato[0]);
+		strcpy(directorios[atoi(dato[0])].nombre, dato[1]);
+		directorios[atoi(dato[0])].padre = atoi(dato[2]);
 	}
 
+	free(datosLeidos);
 	fclose(fileToRead);
 }
 
