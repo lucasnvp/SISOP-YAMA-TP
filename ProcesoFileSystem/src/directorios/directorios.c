@@ -28,6 +28,7 @@ void remove_directory_yamafs(uint32_t index){
 	if(puedeEliminar){
 		strcpy(directorios[index].nombre, "");
 		directorios[index].padre = 0;
+		log_info(log_FileSystem,"Se ha elimiando el directorio");
 	}
 }
 
@@ -67,35 +68,22 @@ void persistir_directorios(){
 
 void new_directory_yamafs(char* directorio){
 	uint32_t i = 0;
-	uint32_t padre = 0;
-	int32_t cantArgs = -1;
+	int32_t padre = 0;
+	int32_t cantArgs;
+	int32_t beforLastArg;
 	bool puedeGuargar = true;
 
 	char** nameDir = string_split(directorio, "/");
 
 	// Cuantos argumentos son
-	while(nameDir[i] != NULL){
-		cantArgs++;
-		i++;
-	}
-//	log_info(log_FileSystem, "La cantidad de argumentos son: %i", cantArgs);
+	cantArgs = cantidad_Argumentos(nameDir);
 
 	// Valido los argumentos
-	uint32_t j = 0;
-	while(j < cantArgs){
+	beforLastArg = cantArgs - 1;
+	if(cantArgs !=0) padre = search_Index(nameDir, beforLastArg);
+	if(padre == -1){
+		log_info(log_FileSystem,"No se pudo crear el directorio");
 		puedeGuargar = false;
-		for(i = 1; i <= 99; i++){
-			if(string_equals_ignore_case(directorios[i].nombre, nameDir[j])){
-				padre = directorios[i].index;
-				puedeGuargar = true;
-//				log_info(log_FileSystem,"Argumento Encontrado");
-			}
-		}
-		if(puedeGuargar == false){
-			log_info(log_FileSystem,"No se pudo crear el directorio");
-			break;
-		}
-		j++;
 	}
 
 	// Valido que ya no este creado
@@ -143,37 +131,86 @@ void reload_directorys(){
 
 void rename_directory_yamafs(char* pathOriginal, char* nombreFinal){
 	uint32_t i = 0;
-	uint32_t j = 0;
-	uint32_t padre = 0;
-	int32_t cantArgs = -1;
+	uint32_t index = 0;
+	int32_t cantArgs;
+
+	// Separo el path por cada "/" que tiene
 	char** nameDir = string_split(pathOriginal, "/");
 
 	// Cuantos argumentos son
-	while(nameDir[i] != NULL){
+	cantArgs = cantidad_Argumentos(nameDir);
+
+	// Busco el padre del dir
+	index = search_Index(nameDir, cantArgs);
+
+	// Busco el directorio a renombrar
+	if(index == -1){
+		log_info(log_FileSystem,"Error al buscar el path");
+	} else{
+		strcpy(directorios[index].nombre, nombreFinal);
+		log_info(log_FileSystem,"El directorio fue renombrado");
+	}
+
+}
+
+void move_directory_yamafs(char* pathOriginal, char* pathFinal){
+	bool puedeMover = true;
+	// Separo los path  por cada "/" que tiene
+	char** nameDirOriginal = string_split(pathOriginal, "/");
+	char** nameDirFinal = string_split(pathFinal, "/");
+
+	// Busco los index de ambos
+	uint32_t indexOriginal = search_Index(nameDirOriginal, cantidad_Argumentos(nameDirOriginal));
+	uint32_t indexFinal = search_Index(nameDirFinal, cantidad_Argumentos(nameDirFinal));
+
+	if(indexOriginal == -1){
+		log_info(log_FileSystem,"El directorio original no fue encontrado");
+		puedeMover = false;
+	}
+	if(indexFinal == -1){
+		log_info(log_FileSystem,"El directorio final no fue encontrado");
+		puedeMover = false;
+	}
+
+	// Muevo el directorio
+	if(puedeMover){
+		directorios[indexOriginal].padre = directorios[indexFinal].index;
+		log_info(log_FileSystem,"El directorio fue movido");
+	}
+}
+
+int32_t cantidad_Argumentos(char** spitPath){
+	uint32_t i = 0;
+	int32_t cantArgs = -1;
+	// Cuantos argumentos son
+	while(spitPath[i] != NULL){
 		cantArgs++;
 		i++;
 	}
+	return cantArgs;
+}
+
+int32_t search_Index(char** splitPath, int32_t cantArgs){
+	uint32_t i, j = 0;
+	bool encontrado = false;
+	int32_t index = 0;
 
 	// Busco el padre del dir
-	while(j < cantArgs){
+	while(j <= cantArgs){
 		for(i = 1; i <= 99; i++){
-			if(string_equals_ignore_case(directorios[i].nombre, nameDir[j])){
-				padre = directorios[i].index;
-			}
+			if(string_equals_ignore_case(directorios[i].nombre, splitPath[j]))
+				if(directorios[i].padre == index){
+					index = directorios[i].index;
+					encontrado = true;
+				}
 		}
 		j++;
 	}
 
-	// Busco el directorio a renombrar
-	for(i = 1; i <= 99; i++){
-		if(string_equals_ignore_case(directorios[i].nombre, nameDir[cantArgs]))
-			if(directorios[i].padre == padre){
-				strcpy(directorios[i].nombre, nombreFinal);
-				log_info(log_FileSystem,"El directorio fue renombrado");
-			}
+	if(!encontrado){
+//		log_info(log_FileSystem, "No se encontro el directorio");
+		index = -1;
 	}
-}
 
-void move_directory_yamafs(char* pathOriginal, char* pathFinal){
-
+	return index;
 }
