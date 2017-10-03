@@ -112,10 +112,10 @@ void new_directory_yamafs(char* directorio){
 void reload_directorys(){
 	FILE * fileToRead = fopen(PATH_DIRECTORIOS,"r");
 
-	char* datosLeidos = malloc(25);
-	fgets(datosLeidos,25,fileToRead);
+	char* datosLeidos = malloc(255);
+	fgets(datosLeidos,255,fileToRead);
 
-	while(fgets(datosLeidos,25,fileToRead)){
+	while(fgets(datosLeidos,255,fileToRead)){
 		char** dato = string_split(datosLeidos, "\t");
 		directorios[atoi(dato[0])].index = atoi(dato[0]);
 		strcpy(directorios[atoi(dato[0])].nombre, dato[1]);
