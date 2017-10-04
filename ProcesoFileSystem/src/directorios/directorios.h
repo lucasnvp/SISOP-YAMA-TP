@@ -5,6 +5,7 @@
 
 #include "commons/log.h"
 #include "commons/string.h"
+#include "commonsfunctions/functions.h"
 
 #include "../estructuras/structs.h"
 

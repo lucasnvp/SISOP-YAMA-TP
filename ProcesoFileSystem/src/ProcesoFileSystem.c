@@ -83,10 +83,11 @@ void consola() {
 			if (!strcmp(comandos->comando, "exit")) {
 				if (comandos->cantArgs == 0) {
 					free(comandos->comando);
-					free(comandos);
-					free(linea);
+					//free(comandos);
+					//free(linea);
 					//Funcion exit
 					exitToTheFS();
+					break;
 				}
 				else print_console((void*) log_error, "Número de parámetros incorrecto.");
 			}

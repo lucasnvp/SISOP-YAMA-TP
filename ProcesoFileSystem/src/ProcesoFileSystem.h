@@ -10,12 +10,14 @@
 #include "commons/log.h"
 #include "commons/string.h"
 #include "commons/collections/list.h"
+#include "commonsfunctions/functions.h"
 #include "servidor/servidor.h"
 #include "serializador/serializador.h"
 #include "serializador/estructuras.h"
 
 #include "config/config_filesystem.h"
 #include "comandos/comandos.h"
+#include "directorios/directorios.h"
 
 #define TAMANIO_FIJO_BLOQUE 1048576
 #define NUEVA_CONEXION_NODO 1

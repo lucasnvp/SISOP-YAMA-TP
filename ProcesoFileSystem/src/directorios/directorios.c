@@ -4,7 +4,7 @@ void setup_directorys(t_log* console, t_log* fileSystem){
 	log_Console = console;
 	log_FileSystem = fileSystem;
 
-	if(ValidarArchivo(PATH_DIRECTORIOS)){
+	if(ValidarArchivo((char*) PATH_DIRECTORIOS)){
 		reload_directorys();
 	} else{
 		mkdir(PATH_METADATA, 0777);

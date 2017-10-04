@@ -1,4 +1,4 @@
-#include "fuctions.h"
+#include "functions.h"
 
 uint32_t bytesToMB(uint32_t bytes){
 	return bytes / 1048576;
