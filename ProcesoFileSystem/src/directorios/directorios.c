@@ -211,3 +211,9 @@ int32_t search_Index(char** splitPath, int32_t cantArgs){
 
 	return index;
 }
+
+int32_t search_path_Index(char* path){
+	char** splitPath = string_split(path, "/");
+	uint32_t index = search_Index(splitPath, cantidad_Argumentos(splitPath));
+	return index;
+}

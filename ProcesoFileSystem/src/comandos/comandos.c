@@ -58,3 +58,12 @@ void copyFromFStoYamafs(char* pathFS, char* dirYamafs){
 		log_warning(log_FileSystem, "No se encontro el archivo");
 	}
 }
+
+t_archivo* newFileInYamafs(char* path, char* pathYamafs){
+	if(ValidarArchivo(path)){
+		t_archivo* newFile = new_file(sizeArchivo(path),typeArchivo(path),search_path_Index(pathYamafs),NULL);
+		return newFile;
+	} else{
+		log_warning(log_FileSystem, "No se encontro el archivo");
+	}
+}

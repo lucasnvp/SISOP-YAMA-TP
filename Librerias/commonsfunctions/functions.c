@@ -18,6 +18,19 @@ uint32_t ValidarArchivo(char* path){
 	return archivo_existente;
 }
 
+uint32_t sizeArchivo(char* path){
+	struct stat pathStat;
+	int32_t fd = open(path,O_RDWR);
+	fstat(fd,&pathStat);
+	close(fd);
+	return pathStat.st_size;
+}
+
+char* typeArchivo(char* path){
+	char** type = string_split(path, ".");
+	return type[1];
+}
+
 int remove_directory(const char *path){
    DIR *d = opendir(path);
    size_t path_len = strlen(path);

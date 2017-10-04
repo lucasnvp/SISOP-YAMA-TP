@@ -21,6 +21,7 @@ void reload_directorys();
 void persistir_directorios();
 int32_t cantidad_Argumentos(char** spitPath);
 int32_t search_Index(char** splitPath, int32_t cantArgs);
+int32_t search_path_Index(char* path);
 
 void new_directory_yamafs(char* directorio);
 void rename_directory_yamafs(char* pathOriginal, char* nombreFinal);

@@ -31,6 +31,9 @@ int main(int argc, char *argv[]) {
 	//Inicializar lista nodos
 	setup_nodos();
 
+	//Inicializar lista archivos
+	setup_archivos();
+
 	//Configuracion inicial
 	config = load_config(PATH_CONFIG);
 	print_config(config, log_Console);
@@ -140,6 +143,13 @@ void consola() {
 			else if (!strcmp(comandos->comando, "testmv")) {
 				if (comandos->cantArgs == 2) {
 					move_directory_yamafs(comandos->arg[0], comandos->arg[1]);
+				}
+				else print_console((void*) log_error, "Número de parámetros incorrecto.");
+			}
+
+			else if (!strcmp(comandos->comando, "testnewfile")) {
+				if (comandos->cantArgs == 2) {
+					newFileInYamafs(comandos->arg[0], comandos->arg[1]);
 				}
 				else print_console((void*) log_error, "Número de parámetros incorrecto.");
 			}
