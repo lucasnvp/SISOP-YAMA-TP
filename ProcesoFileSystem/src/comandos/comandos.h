@@ -12,6 +12,9 @@
 
 #include "../estructuras/structs.h"
 
+#include "../directorios/directorios.h"
+#include "../nodos/nodos.h"
+
 #define TAMANIO_FIJO_BLOQUE 1048576
 
 t_log* log_FileSystem;

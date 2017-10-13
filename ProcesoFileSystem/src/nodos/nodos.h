@@ -11,7 +11,9 @@
 #include "commons/string.h"
 #include "commons/bitarray.h"
 #include "commons/collections/list.h"
+#include "commonsfunctions/functions.h"
 #include "serializador/estructuras.h"
+#include "serializador/serializador.h"
 
 #include "../estructuras/structs.h"
 
@@ -23,7 +25,7 @@ typedef struct NodoBitMapType{
 }t_nodo_and_bitmap;
 
 t_list * LIST_NODOS;
-uint32_t i;
+//uint32_t i;
 uint32_t tamanioTotal;
 uint32_t tamanioLibreTotal;
 uint32_t punteroAlUltimoNodoEscrito;

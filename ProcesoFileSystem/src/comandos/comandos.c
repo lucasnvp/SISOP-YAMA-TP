@@ -13,7 +13,7 @@ void format(bool ESTADO_ESTABLE, bool CONNECT_DATANODE){
 
 	ESTADO_ESTABLE = true;
 	CONNECT_DATANODE = false;
-	print_console(log_info, "File System formateado.");
+	print_console((void*) log_info, "File System formateado.");
 }
 
 void exitToTheFS(){
@@ -24,7 +24,7 @@ void exitToTheFS(){
 	persistir_directorios();
 
 	//Cierro el proceso
-	exit(EXIT_SUCCESS);
+	//exit(EXIT_SUCCESS);
 }
 
 void copyFromFStoYamafs(char* pathFS, char* dirYamafs){
