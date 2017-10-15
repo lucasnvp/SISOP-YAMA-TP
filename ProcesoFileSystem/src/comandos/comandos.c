@@ -22,9 +22,6 @@ void exitToTheFS(){
 
 	//Persisto los directorios
 	persistir_directorios();
-
-	//Cierro el proceso
-	//exit(EXIT_SUCCESS);
 }
 
 void copyFromFStoYamafs(char* pathFS, char* dirYamafs){
