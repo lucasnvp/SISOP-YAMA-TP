@@ -131,44 +131,40 @@ void connection_handler(uint32_t socket, uint32_t command){
 		log_info(log_Console, "Dato a transformar: %s", DATOS_A_TRANSFORMAR);
 		//1 Solicitar archivo al FS
 		//2 Comunicarle a MASTER a que procesos WORKER debe conectarse con IP y PUERTO
-		//3 Sobre que WORKER debe aplicar el programa de transformacion
-		//4 El nombre de archivo temporal donde debera almacenar el resultado del script de Transformacion
+		//3 Comunicarle a MASTER Sobre que WORKER debe aplicar el programa de transformacion
+		//4 Comunicarle a MASTER El nombre de archivo temporal donde debera almacenar el resultado del script de Transformacion
+		break;
+	}
+	case NEW_JOB_STATUS:{
 		break;
 	}
 	case NEW_LOCAL_REDUCTION:{ //NEW_TRANSFORMATION
-			log_info(log_Console,"NEW JOB");
-			DATOS_A_TRANSFORMAR = deserializar_string(socket);
-			log_info(log_Console, "Dato a transformar: %s", DATOS_A_TRANSFORMAR);
-			//1 Solicitar archivo al FS
-			//2 Comunicarle a MASTER a que procesos WORKER debe conectarse con IP y PUERTO
-			//3 Sobre que WORKER debe aplicar el programa de transformacion
-			//4 El nombre de archivo temporal donde debera almacenar el resultado del script de Transformacion
-			break;
+		//1 Comunicarle a MASTER nombre de los archivos temporales almacenados en cada uno de los nodos que debera procesar con el programa de reduccion
+		//2 Comunicarle a MASTER nombre que le pondra a cada archivo de reduccion por worker (local)
+		break;
 		}
+	case NEW_LOCAL_REDUCTION_STATUS:{
+		break;
+	}
 	case NEW_GLOBAL_REDUCTION:{
-				log_info(log_Console,"NEW JOB");
-				DATOS_A_TRANSFORMAR = deserializar_string(socket);
-				log_info(log_Console, "Dato a transformar: %s", DATOS_A_TRANSFORMAR);
-				//1 Solicitar archivo al FS
-				//2 Comunicarle a MASTER a que procesos WORKER debe conectarse con IP y PUERTO
-				//3 Sobre que WORKER debe aplicar el programa de transformacion
-				//4 El nombre de archivo temporal donde debera almacenar el resultado del script de Transformacion
-				break;
-			}
+		//1 Comunicarle a MASTER lista de nodos con ip y puerto de WORKER
+		//2 Comunicarle a MASTER el nombre temporal de reduccion local de cada WORKER
+		//3 Comunicarle a MASTER un WORKER Designado como encargado para Reduccion Global
+		//4 Comunicarle a MASTER la ruta de donte guardar el archivo de Reduccion Global
+		break;
+		}
 	case NEW_GLOBAL_REDUCTION_STATUS:{
 
-					break;
-				}
+		break;
+		}
 	case DATA_SAVING:{
-				log_info(log_Console,"NEW JOB");
-				DATOS_A_TRANSFORMAR = deserializar_string(socket);
-				log_info(log_Console, "Dato a transformar: %s", DATOS_A_TRANSFORMAR);
-				//1 Solicitar archivo al FS
-				//2 Comunicarle a MASTER a que procesos WORKER debe conectarse con IP y PUERTO
-				//3 Sobre que WORKER debe aplicar el programa de transformacion
-				//4 El nombre de archivo temporal donde debera almacenar el resultado del script de Transformacion
-				break;
-			}
+		//1 Comunicarle a MASTER ip y puerto de WORKER a cual conectarse para guardar
+		//1 El nombre del archivo para guardar en la ruta previamente indicada en la Reduccion global
+		break;
+		}
+	case DATA_SAVING_STATUS:{
+		break;
+	}
 	default:
 		log_info(log_Console,"Error al recibir el comando");
 	}
