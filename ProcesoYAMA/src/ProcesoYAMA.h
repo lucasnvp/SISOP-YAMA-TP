@@ -9,7 +9,18 @@
 #include "config/config_yama.h"
 
 #define NUEVA_CONEXION_YAMA 2
+
 #define NEW_JOB 1
+#define NEW_JOB_STATUS 6
+
+#define NEW_LOCAL_REDUCTION 3
+#define NEW_LOCAL_REDUCTION_STATUS 7
+
+#define NEW_GLOBAL_REDUCTION 4
+#define NEW_GLOBAL_REDUCTION_STATUS 8
+
+#define DATA_SAVING 5
+#define DATA_SAVING_STATUS 9
 
 char* PATH_CONFIG = "/home/utnso/Blacklist/tp-2017-2c-Blacklist/ProcesoYAMA/src/config/config.txt";
 Type_Config config;

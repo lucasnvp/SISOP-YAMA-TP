@@ -117,15 +117,58 @@ void server(void* args){
 	}
 }
 
+void procesData()
+{
+	//lanzo hilo connection_handler a partir de la solicitud de un nuevo JOB de un MASTER X
+}
+
+	//ACLARACION: Conozco el estado de todos los MASTERS en el sistema, cada una de las operaciones que estos realizaron y deben realizazr
 void connection_handler(uint32_t socket, uint32_t command){
 	switch(command){
-	case NEW_JOB:{
+	case NEW_JOB:{ //NEW_TRANSFORMATION
 		log_info(log_Console,"NEW JOB");
 		DATOS_A_TRANSFORMAR = deserializar_string(socket);
 		log_info(log_Console, "Dato a transformar: %s", DATOS_A_TRANSFORMAR);
-		//Solicitar dato al FS
+		//1 Solicitar archivo al FS
+		//2 Comunicarle a MASTER a que procesos WORKER debe conectarse con IP y PUERTO
+		//3 Sobre que WORKER debe aplicar el programa de transformacion
+		//4 El nombre de archivo temporal donde debera almacenar el resultado del script de Transformacion
 		break;
 	}
+	case NEW_LOCAL_REDUCTION:{ //NEW_TRANSFORMATION
+			log_info(log_Console,"NEW JOB");
+			DATOS_A_TRANSFORMAR = deserializar_string(socket);
+			log_info(log_Console, "Dato a transformar: %s", DATOS_A_TRANSFORMAR);
+			//1 Solicitar archivo al FS
+			//2 Comunicarle a MASTER a que procesos WORKER debe conectarse con IP y PUERTO
+			//3 Sobre que WORKER debe aplicar el programa de transformacion
+			//4 El nombre de archivo temporal donde debera almacenar el resultado del script de Transformacion
+			break;
+		}
+	case NEW_GLOBAL_REDUCTION:{
+				log_info(log_Console,"NEW JOB");
+				DATOS_A_TRANSFORMAR = deserializar_string(socket);
+				log_info(log_Console, "Dato a transformar: %s", DATOS_A_TRANSFORMAR);
+				//1 Solicitar archivo al FS
+				//2 Comunicarle a MASTER a que procesos WORKER debe conectarse con IP y PUERTO
+				//3 Sobre que WORKER debe aplicar el programa de transformacion
+				//4 El nombre de archivo temporal donde debera almacenar el resultado del script de Transformacion
+				break;
+			}
+	case NEW_GLOBAL_REDUCTION_STATUS:{
+
+					break;
+				}
+	case DATA_SAVING:{
+				log_info(log_Console,"NEW JOB");
+				DATOS_A_TRANSFORMAR = deserializar_string(socket);
+				log_info(log_Console, "Dato a transformar: %s", DATOS_A_TRANSFORMAR);
+				//1 Solicitar archivo al FS
+				//2 Comunicarle a MASTER a que procesos WORKER debe conectarse con IP y PUERTO
+				//3 Sobre que WORKER debe aplicar el programa de transformacion
+				//4 El nombre de archivo temporal donde debera almacenar el resultado del script de Transformacion
+				break;
+			}
 	default:
 		log_info(log_Console,"Error al recibir el comando");
 	}
