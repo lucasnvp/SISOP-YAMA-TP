@@ -28,6 +28,19 @@ int main(void) {
 
 	pthread_join(thread_server, (void**) NULL);
 
+//	t_list * tablaEstado = list_create();
+//	list_add(tablaEstado,"hola");
+//	list_add(tablaEstado,"chau");
+//	int  a= tablaEstado->elements_count;
+//
+//	int i=0;
+//
+//	for(i;i<a;i++)
+//	{
+//		printf("%s \n",list_get(tablaEstado,i));
+//	}
+
+
 	return EXIT_SUCCESS;
 }
 

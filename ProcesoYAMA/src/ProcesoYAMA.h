@@ -8,6 +8,8 @@
 
 #include "config/config_yama.h"
 
+#include "commons/collections/list.h"
+
 #define NUEVA_CONEXION_YAMA 2
 
 #define NEW_JOB 1
@@ -21,6 +23,16 @@
 
 #define DATA_SAVING 5
 #define DATA_SAVING_STATUS 9
+
+typedef struct StatusTable{
+	uint32_t JOB;
+	uint32_t MASTER;
+	uint32_t NODO;
+	uint32_t BLOQUE;
+	uint32_t ETAPA;
+	char * ARCHIVO_TEMPORAL;
+	uint32_t ESTADO;
+} Type_StatusTable;
 
 char* PATH_CONFIG = "/home/utnso/Blacklist/tp-2017-2c-Blacklist/ProcesoYAMA/src/config/config.txt";
 Type_Config config;
