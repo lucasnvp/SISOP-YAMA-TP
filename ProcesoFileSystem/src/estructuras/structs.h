@@ -16,6 +16,7 @@ typedef struct ArchivoBloques{
 }t_bloque;
 
 typedef struct Archivo{
+//	char* nombre;
 	uint32_t tamanio;
 	char* tipo;
 	uint32_t dir_padre;
