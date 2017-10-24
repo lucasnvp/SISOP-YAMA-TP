@@ -159,12 +159,11 @@ void consola() {
 			else print_console((void*) log_error, "Comando incorrecto.");
 
 			// Libero toda la memoria
-//			for (i = 0; i < comandos->cantArgs; i++)
-//				free(comandos->arg[i]);
+			for (i = 0; i < comandos->cantArgs; i++)
+				free(comandos->arg[i]);
 
-//			free(comandos->comando);
+			free(comandos->comando);
 		}
-//		free(comandos);
 		free(linea);
 	}
 }
