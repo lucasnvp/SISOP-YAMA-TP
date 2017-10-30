@@ -24,7 +24,7 @@ int main(void) {
 	connect_server_FileSystem();
 
 	//Creo el hilo del servidor
-	pthread_create(&thread_server,NULL,(void*) server,"Servidor");
+	pthread_create(&thread_server, NULL, (void*) server, "Servidor");
 
 	pthread_join(thread_server, (void**) NULL);
 
@@ -40,54 +40,55 @@ int main(void) {
 //		printf("%s \n",list_get(tablaEstado,i));
 //	}
 
-
 	return EXIT_SUCCESS;
 }
 
-void init_log(char* pathLog){
-	mkdir("/home/utnso/Blacklist/Logs",0755);
+void init_log(char* pathLog) {
+	mkdir("/home/utnso/Blacklist/Logs", 0755);
 	log_Console = log_create(pathLog, "YAMA", true, LOG_LEVEL_INFO);
 	log_YAMA = log_create(pathLog, "YAMA", false, LOG_LEVEL_INFO);
 }
 
-void connect_server_FileSystem(){
-    //Conexion al servidor FileSystem
-	SERVIDOR_FILESYSTEM = connect_server(config.FS_IP,config.FS_PUERTO);
+void connect_server_FileSystem() {
+	//Conexion al servidor FileSystem
+	SERVIDOR_FILESYSTEM = connect_server(config.FS_IP, config.FS_PUERTO);
 
 	//Si conecto, informo
-	if(SERVIDOR_FILESYSTEM > 1){
-		log_info(log_Console,"Connected successfully to the File System");
+	if (SERVIDOR_FILESYSTEM > 1) {
+		log_info(log_Console, "Connected successfully to the File System");
 		// Le informo al FS que es una conexion YAMA
 		serializar_int(SERVIDOR_FILESYSTEM, NUEVA_CONEXION_YAMA);
 		// Retorno del estado del FS
 		uint32_t estado_FS = deserializar_int(SERVIDOR_FILESYSTEM);
-		if(estado_FS == true){
-			log_info(log_Console,"File System Stable");
-		} else{
-			log_warning(log_Console,"File System Unstable");
+		if (estado_FS == true) {
+			log_info(log_Console, "File System Stable");
+		} else {
+			log_warning(log_Console, "File System Unstable");
 			exit(EXIT_SUCCESS);
 		}
-	} else{
-		log_warning(log_Console, "No se puedo conectar al servidor de File System");
+	} else {
+		log_warning(log_Console,
+				"No se puedo conectar al servidor de File System");
 		exit(EXIT_SUCCESS);
 	}
 }
 
-void server(void* args){
+void server(void* args) {
 	// Variables para el servidor
 	fd_set master;   	// conjunto maestro de descriptores de fichero
-	fd_set read_fds; 	// conjunto temporal de descriptores de fichero para select()
+	fd_set read_fds; // conjunto temporal de descriptores de fichero para select()
 	uint32_t fdmax;			// número máximo de descriptores de fichero
 	int i;				// variable para el for
 	FD_ZERO(&master);	// borra los conjuntos maestro
 	FD_ZERO(&read_fds);	// borra los conjuntos temporal
 
 	//Creacion del servidor
-	uint32_t SERVIDOR_YAMA = build_server(config.YAMA_PUERTO, config.CANTCONEXIONES);
+	uint32_t SERVIDOR_YAMA = build_server(config.YAMA_PUERTO,
+			config.CANTCONEXIONES);
 
 	//El socket esta listo para escuchar
-	if(SERVIDOR_YAMA > 0){
-		log_info(log_Console,"Servidor YAMA Escuchando");
+	if (SERVIDOR_YAMA > 0) {
+		log_info(log_Console, "Servidor YAMA Escuchando");
 	}
 
 	// añadir listener al conjunto maestro
@@ -97,14 +98,14 @@ void server(void* args){
 	fdmax = SERVIDOR_YAMA; // por ahora es éste
 
 	// bucle principal
-	while(true) {
+	while (true) {
 		read_fds = master; // cópialo
-		if (select(fdmax+1, &read_fds, NULL, NULL, NULL) == -1) {
+		if (select(fdmax + 1, &read_fds, NULL, NULL, NULL) == -1) {
 			perror("select");
 			exit(1);
 		}
 		// explorar conexiones existentes en busca de datos que leer
-		for(i = 0; i <= fdmax; i++) {
+		for (i = 0; i <= fdmax; i++) {
 			if (FD_ISSET(i, &read_fds)) { // ¡¡tenemos datos!!
 				if (i == SERVIDOR_YAMA) {
 					// acepto una nueva conexion
@@ -118,10 +119,10 @@ void server(void* args){
 					uint32_t command = deserializar_int(i);
 
 					// gestionar datos de un cliente
-					if(command <= 0){
+					if (command <= 0) {
 						close(i); // Close conexion
 						FD_CLR(i, &master); // eliminar del conjunto maestro
-					}else {
+					} else {
 						connection_handler(i, command);
 					}
 				}
@@ -130,16 +131,15 @@ void server(void* args){
 	}
 }
 
-void procesData()
-{
+void procesData() {
 	//lanzo hilo connection_handler a partir de la solicitud de un nuevo JOB de un MASTER X
 }
 
-	//ACLARACION: Conozco el estado de todos los MASTERS en el sistema, cada una de las operaciones que estos realizaron y deben realizazr
-void connection_handler(uint32_t socket, uint32_t command){
-	switch(command){
-	case NEW_JOB:{ //NEW_TRANSFORMATION
-		log_info(log_Console,"NEW JOB");
+//ACLARACION: Conozco el estado de todos los MASTERS en el sistema, cada una de las operaciones que estos realizaron y deben realizazr
+void connection_handler(uint32_t socket, uint32_t command) {
+	switch (command) {
+	case NEW_JOB: { //NEW_TRANSFORMATION
+		log_info(log_Console, "NEW JOB");
 		DATOS_A_TRANSFORMAR = deserializar_string(socket);
 		log_info(log_Console, "Dato a transformar: %s", DATOS_A_TRANSFORMAR);
 		//1 Solicitar archivo al FS
@@ -148,39 +148,89 @@ void connection_handler(uint32_t socket, uint32_t command){
 		//4 Comunicarle a MASTER El nombre de archivo temporal donde debera almacenar el resultado del script de Transformacion
 		break;
 	}
-	case NEW_JOB_STATUS:{
+	case NEW_JOB_STATUS: {
 		break;
 	}
-	case NEW_LOCAL_REDUCTION:{ //NEW_TRANSFORMATION
+	case NEW_LOCAL_REDUCTION: { //NEW_TRANSFORMATION
 		//1 Comunicarle a MASTER nombre de los archivos temporales almacenados en cada uno de los nodos que debera procesar con el programa de reduccion
 		//2 Comunicarle a MASTER nombre que le pondra a cada archivo de reduccion por worker (local)
 		break;
-		}
-	case NEW_LOCAL_REDUCTION_STATUS:{
+	}
+	case NEW_LOCAL_REDUCTION_STATUS: {
 		break;
 	}
-	case NEW_GLOBAL_REDUCTION:{
+	case NEW_GLOBAL_REDUCTION: {
 		//1 Comunicarle a MASTER lista de nodos con ip y puerto de WORKER
 		//2 Comunicarle a MASTER el nombre temporal de reduccion local de cada WORKER
 		//3 Comunicarle a MASTER un WORKER Designado como encargado para Reduccion Global
 		//4 Comunicarle a MASTER la ruta de donte guardar el archivo de Reduccion Global
 		break;
-		}
-	case NEW_GLOBAL_REDUCTION_STATUS:{
+	}
+	case NEW_GLOBAL_REDUCTION_STATUS: {
 
 		break;
-		}
-	case DATA_SAVING:{
+	}
+	case DATA_SAVING: {
 		//1 Comunicarle a MASTER ip y puerto de WORKER a cual conectarse para guardar
 		//1 El nombre del archivo para guardar en la ruta previamente indicada en la Reduccion global
 		break;
-		}
-	case DATA_SAVING_STATUS:{
+	}
+	case DATA_SAVING_STATUS: {
 		break;
 	}
 	default:
-		log_info(log_Console,"Error al recibir el comando");
+		log_info(log_Console, "Error al recibir el comando");
 	}
 
 	return;
 }
+
+void solicitarBloquesAFS(char* ruta) {
+
+	serializar_string(ruta);
+	//Recibir estructura con Nro de DataNode y posicion relativa a Bloques y Tamanios respectivos.
+	//return estructura a planificar. Va a ser un nuevo JOB
+}
+
+//Hay que crear Struct para tabla de estados
+
+void planificarTranformacion() {
+
+	int nodoMenosOcupado = getNodoMenosOcupado();
+
+}
+
+int disponibilidadDeWorker(int w) {
+
+	//Esta funcion devuelve el A(w). w es el worker ingresado como parametro.
+	//Busca en la tabla de estados y lo calcula con la Disponibilidad Base, pasada por configuracion.
+
+	return 1;
+
+}
+
+// Crear una lista de NodosActivos
+
+int getNodoMenosOcuapdo() {
+
+	t_nodoXDemanda nxd;
+	t_list *listaNodosCopia;
+
+	*listaNodosCopia = &listaNodosActivos;
+
+	while (listaNodosCopia->head != NULL) {
+
+		nxd.NODO = listaNodosCopia->head->data;
+		nxd.disponibilidad = disponibilidadDeWorker(listaNodosCopia->head->data);
+		list_add(listaNodoPorDemanda,*nxd);
+
+		listaNodosCopia->head->next;
+
+	}
+
+	//list_sort(listaNodoPorDemanda,(*>)(listaNodoPorDemanda->head->data));
+
+	return 1;
+
+}
+

@@ -40,6 +40,13 @@ int main(int argc, char *argv[]) {
 	//Lo que tiene que hacer!
 	while(true){
 
+		//Deserializo los datos que me devuelve YAMA para operar
+		IP_WORKER = deserializar_int(SERVIDOR_YAMA);
+		PUERTO_WORKER = deserializar_int(SERVIDOR_YAMA);
+		BLOQUE = deserializar_int(SERVIDOR_YAMA);
+		DATOS_OCUPADOS_BLOQUE = deserializar_int(SERVIDOR_YAMA);
+		RESULTADO_DE_LA_TRANSFORMACION = deserializar_string(SERVIDOR_YAMA);
+
 	}
 
 	return EXIT_SUCCESS;

@@ -24,7 +24,7 @@
 #define DATA_SAVING 5
 #define DATA_SAVING_STATUS 9
 
-typedef struct StatusTable{
+typedef struct StatusTable {
 	uint32_t JOB;
 	uint32_t MASTER;
 	uint32_t NODO;
@@ -34,7 +34,20 @@ typedef struct StatusTable{
 	uint32_t ESTADO;
 } Type_StatusTable;
 
-char* PATH_CONFIG = "/home/utnso/Blacklist/tp-2017-2c-Blacklist/ProcesoYAMA/src/config/config.txt";
+typedef struct nodoXDemanda {
+
+	uint32_t NODO;
+	uint32_t disponibilidad;
+} t_nodoXDemanda;
+
+t_list *listaNodoPorDemanda = list_create();
+
+t_list *listaEstados = list_create();
+
+t_list *listaNodosActivos = list_create();
+
+char* PATH_CONFIG =
+		"/home/utnso/Blacklist/tp-2017-2c-Blacklist/ProcesoYAMA/src/config/config.txt";
 Type_Config config;
 
 char* PATH_LOG = "/home/utnso/Blacklist/Logs/logYAMA.txt";

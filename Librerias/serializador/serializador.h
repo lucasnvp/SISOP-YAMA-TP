@@ -6,7 +6,7 @@
 #include <inttypes.h>
 #include <string.h>
 
-#include "/home/utnso/Blacklist/tp-2017-2c-Blacklist/Librerias/servidor/servidor.h"
+#include "../servidor/servidor.h"
 #include "estructuras.h"
 
 typedef struct {
