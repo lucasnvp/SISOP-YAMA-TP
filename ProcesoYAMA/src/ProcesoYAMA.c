@@ -194,43 +194,90 @@ void solicitarBloquesAFS(char* ruta) {
 
 //Hay que crear Struct para tabla de estados
 
-void planificarTranformacion() {
+uint32_t planificarTranformacion() {
 
 	int nodoMenosOcupado = getNodoMenosOcupado();
 
 }
 
-int disponibilidadDeWorker(int w) {
 
-	//Esta funcion devuelve el A(w). w es el worker ingresado como parametro.
-	//Busca en la tabla de estados y lo calcula con la Disponibilidad Base, pasada por configuracion.
-
-	return 1;
-
-}
 
 // Crear una lista de NodosActivos
 
-int getNodoMenosOcuapdo() {
+uint32_t getNodoMenosOcupado() {
 
 	t_nodoXDemanda nxd;
 	t_list *listaNodosCopia;
 
-	*listaNodosCopia = &listaNodosActivos;
+	listaNodosCopia = listaNodosActivos->head;
 
 	while (listaNodosCopia->head != NULL) {
-
 		nxd.NODO = listaNodosCopia->head->data;
-		nxd.disponibilidad = disponibilidadDeWorker(listaNodosCopia->head->data);
-		list_add(listaNodoPorDemanda,*nxd);
-
+		nxd.disponibilidad = A(listaNodosCopia->head->data);
+		list_add(&listaNodoPorDemanda,&nxd);
 		listaNodosCopia->head->next;
+	}
+	//list_sort(listaNodoPorDemanda,*(>)(listaNodoPorDemanda->head->data)); Aca deberia ordenada la lista para que ordene de mayor a menor los nodos con su disponibilidad :TODO
+	t_nodoXDemanda nodo;
 
+	memcpy(&nodo,listaNodoPorDemanda->head->data,sizeof(nodo));
+
+	list_clean(&listaNodosCopia);//ESta bien?
+
+	return nodo.NODO;
+}
+uint32_t A(int w) {
+	int disponibilidadBase=0; //Por archivo de confguraion del worker w
+	return disponibilidadBase + PWL(w);
+}
+
+uint32_t PWL(int w)
+{
+	switch(w)//config.ALGORITMO_BALANCEO)// Deberia ser int el tipo del agoritmo de balanceo ..... 1 CLOCK 2 WCLOCK
+	{
+		case 1:
+		{
+			return 0;
+			break;
+		}
+		case 2:
+		{
+			return (WLmax()-WL(w));
+			break;
+		}
+	}
+}
+
+uint32_t WLmax()
+{
+	t_list *listaEstadosCopia;
+	listaEstadosCopia = listaEstados->head;
+	t_statusTable estado;
+	uint32_t total=0;
+	while (listaEstadosCopia->head != NULL)
+	{
+		//estado = listaEstadosCopia->head->data;
+		memcpy(&estado,listaEstadosCopia->head->data,sizeof(estado)); //<- este o el de arriva?
+		if (estado.ESTADO==1)
+			total+=1;
 	}
 
-	//list_sort(listaNodoPorDemanda,(*>)(listaNodoPorDemanda->head->data));
-
-	return 1;
-
+	return total;
 }
+
+uint32_t WL(int w)
+{
+	t_list *listaEstadosCopia;
+		listaEstadosCopia = listaEstados->head;
+		t_statusTable estado;
+		uint32_t total=0;
+		while (listaEstadosCopia->head != NULL)
+		{
+			memcpy(&estado,listaEstadosCopia->head->data,sizeof(estado));
+			if (estado.ESTADO==1 && estado.NODO == w)
+				total+=1;
+		}
+		return total;
+	}
+
 

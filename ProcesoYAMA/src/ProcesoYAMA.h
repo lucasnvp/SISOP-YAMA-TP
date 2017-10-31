@@ -31,8 +31,10 @@ typedef struct StatusTable {
 	uint32_t BLOQUE;
 	uint32_t ETAPA;
 	char * ARCHIVO_TEMPORAL;
-	uint32_t ESTADO;
-} Type_StatusTable;
+	uint32_t ESTADO; // Estado 1=En proceso 2=Error 3=Finalizado
+} t_statusTable;
+
+
 
 typedef struct nodoXDemanda {
 
@@ -40,11 +42,11 @@ typedef struct nodoXDemanda {
 	uint32_t disponibilidad;
 } t_nodoXDemanda;
 
-t_list *listaNodoPorDemanda = list_create();
+t_list *listaNodoPorDemanda;
 
-t_list *listaEstados = list_create();
+t_list *listaEstados;
 
-t_list *listaNodosActivos = list_create();
+t_list *listaNodosActivos;
 
 char* PATH_CONFIG =
 		"/home/utnso/Blacklist/tp-2017-2c-Blacklist/ProcesoYAMA/src/config/config.txt";
@@ -65,5 +67,12 @@ void connect_server_FileSystem();
 void init_log(char* pathLog);
 void server(void* args);
 void connection_handler(uint32_t socket, uint32_t command);
+uint32_t getNodoMenosOcupado();
+uint32_t planificarTranformacion();
+void solicitarBloquesAFS(char* ruta);
+uint32_t A(int w);
+uint32_t PWL(int w);
+uint32_t WLmax();
+uint32_t WL(int w);
 
 #endif /* YAMA_H_ */
